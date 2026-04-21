@@ -1,18 +1,18 @@
 using BaseLib.Utils;
-using Downfall.Code.Abstract;
 using Downfall.Code.Abstract.CardModels;
-using Downfall.Code.Cards.CardModels;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
-namespace Downfall.Code.Cards.Guardian.Basic;
+namespace Downfall.Code.Cards.Guardian.Token;
 
-[Pool(typeof(GuardianCardPool))]
-public class DefendGuardian : GuardianCardModel
+[Pool(typeof(TokenCardPool))]
+public class CrystalWard : GuardianCardModel
 {
-    public DefendGuardian() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
+    public CrystalWard() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
-        WithBlock(5, 3);
+        WithBlock(4, 2);
+        WithKeyword(CardKeyword.Exhaust);
     }
     
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
