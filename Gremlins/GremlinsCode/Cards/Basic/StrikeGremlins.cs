@@ -17,6 +17,4 @@ public class StrikeGremlins : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
     }
-
-
 }

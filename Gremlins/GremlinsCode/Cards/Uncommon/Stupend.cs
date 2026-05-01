@@ -16,6 +16,4 @@ public class Stupend : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
     }
-
-
 }

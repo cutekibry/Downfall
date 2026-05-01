@@ -64,9 +64,13 @@ public class Gremlins : DownfallCharacterModel
 }
 
 public class GremlinsRelicPool : DownfallRelicPool<Gremlins>;
+
 public abstract class GremlinsRelicModel : DownfallRelicModel<Gremlins>;
+
 public abstract class GremlinsPowerModel(
     PowerType powerType = PowerType.Buff,
     PowerStackType powerStackType = PowerStackType.Counter) : DownfallPowerModel<Gremlins>(powerType, powerStackType);
+
 public class GremlinsPotionPool : DownfallPotionPool<Gremlins>;
+
 public class GremlinsCardPool : DownfallCardPool<Gremlins>;
