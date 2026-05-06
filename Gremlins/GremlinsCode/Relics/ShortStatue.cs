@@ -8,4 +8,4 @@ namespace Gremlins.GremlinsCode.Relics;
 public class ShortStatue() : GremlinsRelicModel(RelicRarity.Ancient)
 {
     // TODO - Boss relic
-    }
+}

@@ -7,5 +7,5 @@ namespace Gremlins.GremlinsCode.Relics;
 [Pool(typeof(GremlinsRelicPool))]
 public class StolenMerchandise() : GremlinsRelicModel(RelicRarity.Shop)
 {
-        // TODO
+    // TODO
 }

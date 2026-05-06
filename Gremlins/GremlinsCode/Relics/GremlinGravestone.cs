@@ -7,4 +7,4 @@ namespace Gremlins.GremlinsCode.Relics;
 [Pool(typeof(GremlinsRelicPool))]
 public class GremlinGravestone() : GremlinsRelicModel(RelicRarity.Rare)
 {
-    }
+}

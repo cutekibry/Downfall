@@ -8,5 +8,5 @@ namespace Gremlins.GremlinsCode.Relics;
 public class GremlinLeadersVoucher() : GremlinsRelicModel(RelicRarity.Ancient)
 {
     // TODO - Boss relic
-        // TODO
+    // TODO
 }

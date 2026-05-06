@@ -7,5 +7,5 @@ namespace Gremlins.GremlinsCode.Relics;
 [Pool(typeof(GremlinsRelicPool))]
 public class WizardStaff() : GremlinsRelicModel(RelicRarity.Rare)
 {
-        // TODO
+    // TODO
 }
