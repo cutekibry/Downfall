@@ -27,8 +27,8 @@ public class MakeshiftArmorPower : GremlinsPowerModel, IHasSecondAmount
             DynamicVars["AttacksLeft"].ResetToBase();
             DynamicVars["AttacksLeft"].UpgradeValueBy(7);
         }
-        InvokeDisplayAmountChanged();
+        this.InvokeSecondAmountChanged();
     }
-
+    
     public string GetSecondAmount() => $"{DynamicVars["AttacksLeft"].IntValue}";
 }

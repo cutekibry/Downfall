@@ -10,10 +10,14 @@ public class SharpenBlades : GremlinsCardModel
 {
     public SharpenBlades() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
+        WithCards(0, 1);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await CommonActions.Draw(this, ctx);
+        Owner.PlayerCombatState?.Hand.Cards
+            .Where(e => e.Type == CardType.Attack).ToList()
+            .ForEach(e => e.EnergyCost.SetThisTurn(0));
     }
 }

@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Gremlins.GremlinsCode.Core;
+using Gremlins.GremlinsCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -10,10 +11,13 @@ public class Wizardry : GremlinsCardModel
 {
     public Wizardry() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.None)
     {
+        WithPower<WizardryPower>(1);
+        WithKeyword(CardKeyword.Innate, UpgradeType.Add);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await CommonActions.ApplySelf<WizardryPower>(ctx, this);
     }
+
 }

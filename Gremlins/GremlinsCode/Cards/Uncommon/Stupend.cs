@@ -1,7 +1,12 @@
 using BaseLib.Utils;
+using Downfall.DownfallCode.Commands;
 using Gremlins.GremlinsCode.Core;
+using Gremlins.GremlinsCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Gremlins.GremlinsCode.Cards.Uncommon;
 
@@ -10,10 +15,16 @@ public class Stupend : GremlinsCardModel
 {
     public Stupend() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
+        WithCalculatedBlock(7, Calc, ValueProp.Move, 2);
+        WithDamage(7, 2);
     }
 
-    // TODO: Implement
+    private static decimal Calc(CardModel card, Creature? creature)
+        => card.Owner.Creature.GetPowerAmount<BangPower>();
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await MyCommonActions.CardCalculatedBlock(this, cardPlay);
+        await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
     }
 }

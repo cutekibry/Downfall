@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Gremlins.GremlinsCode.Core;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -10,10 +11,14 @@ public class Revel : GremlinsCardModel
 {
     public Revel() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
+        WithEnergyTip();
+        WithCostUpgradeBy(-1);
+        WithEnergy(1);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        var amount = GremlinsCmd.GetLivingGremlinCount(Owner)*DynamicVars.Energy.IntValue;
+        await PlayerCmd.GainEnergy(amount, Owner);
     }
 }
