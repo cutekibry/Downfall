@@ -1,17 +1,19 @@
-﻿using BaseLib.Abstracts;
+﻿using System.Runtime.CompilerServices;
+using BaseLib.Abstracts;
+using Downfall.DownfallCode.Saves;
 using Gremlins.GremlinsCode.Vfx;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace Gremlins.GremlinsCode.Core;
 
 public class GremlinsRunModel() : CustomSingletonModel(false, true)
 {
-    private static readonly CustomMonsterModel[] FormModels =
+    private static readonly CustomMonsterModel[] StartingGremlins =
     [
         ModelDb.Monster<ShieldGremlin>(),
         ModelDb.Monster<MadGremlin>(),
@@ -20,14 +22,40 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
         ModelDb.Monster<WizardGremlin>()
     ];
 
-    private static readonly Dictionary<Player, GremlinState> _states = new();
+    private static readonly ConditionalWeakTable<Player, GremlinState> States = new();
 
     public static GremlinState GetState(Player player)
     {
-        if (_states.TryGetValue(player, out var state)) return state;
+        if (States.TryGetValue(player, out var state)) return state;
         state = new GremlinState();
-        _states[player] = state;
+        States.Add(player, state);
         return state;
+    }
+
+
+    public override Task AfterActEntered()
+    {
+        var runState = RunManager.Instance.DebugOnlyGetState();
+        if (runState is not { ActFloor: 1 }) return Task.CompletedTask;
+        foreach (var player in runState.Players)
+        {
+            var saveData = DownfallSaveManager.GetPlayerData(player);
+            if (player.Character is Gremlins)
+            {
+                saveData.GremlinStats = StartingGremlins.Select(m => new GremlinSaveData
+                {
+                    ModelId = m.Id,
+                    Hp      = m.MaxInitialHp,
+                    MaxHp   = m.MaxInitialHp,
+                }).ToList();
+            }
+            else
+            {
+                saveData.GremlinStats = [];
+            }
+        }
+
+        return Task.CompletedTask;
     }
 
     public override Task BeforeCombatStart()
@@ -38,21 +66,16 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
         foreach (var player in combatState.Players)
         {
             if (player.Character is not Gremlins) continue;
-
-            var state = new GremlinState();
-            _states[player] = state;
-
             if (player.PlayerCombatState == null) continue;
 
-            foreach (var model in FormModels)
+            var state    = GetState(player);
+            var saveData = DownfallSaveManager.GetPlayerData(player);
+            state.Reset();
+
+            foreach (var saved in saveData.GremlinStats)
             {
-                var mutable  = model.ToMutable();
-                var creature = combatState.CreateCreature(mutable, CombatSide.Player, null);
-                mutable.SetUpForCombat();
-                creature.PetOwner = player;
-                player.PlayerCombatState.AddPetInternal(creature);
-                state.Register(creature, (int)creature.CurrentHp, (int)creature.MaxHp);
-                NCombatRoom.Instance!.AddCreature(creature);
+                var model = ModelDb.GetById<MonsterModel>(saved.ModelId);
+                GremlinsCmd.AddGremlin(player, model, saved.Hp, saved.MaxHp);
             }
 
             var creatureNode = NCombatRoom.Instance?.GetCreatureNode(player.Creature);
@@ -62,74 +85,22 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
 
         return Task.CompletedTask;
     }
-}
 
-public class GremlinState
-{
-    private static readonly Logger Log = GremlinsMainFile.Logger;
-
-    private readonly LinkedList<Creature> _rotation = new();
-    private readonly Dictionary<Creature, (int Hp, int MaxHp)> _hp = new();
-    private readonly List<Creature> _gremlins = [];
-    public Creature? Next => _rotation.First?.Next?.Value;
-    public IReadOnlyList<Creature> Gremlins => _gremlins;
-    public Creature? Active                 => _rotation.First?.Value;
-    public IEnumerable<Creature> Bench      => _rotation.Skip(1);
-
-    internal void Register(Creature gremlin, int hp, int maxHp)
+    public override Task AfterCombatEnd(CombatRoom room)
     {
-        ArgumentNullException.ThrowIfNull(gremlin);
-        if (_hp.ContainsKey(gremlin)) throw new InvalidOperationException($"{gremlin} already registered.");
-        _gremlins.Add(gremlin);
-        _hp[gremlin] = (hp, maxHp);
-        _rotation.AddLast(gremlin);
-        Log.Info($"[GremlinState] Registered {gremlin} hp={hp} maxHp={maxHp} | rotation={RotationString()}");
+        var combatState = CombatManager.Instance.DebugOnlyGetState();
+        if (combatState == null) return base.AfterCombatEnd(room);
+
+        foreach (var player in combatState.Players)
+        {
+            if (player.Character is not Gremlins) continue;
+            var state    = GetState(player);
+            var saveData = DownfallSaveManager.GetPlayerData(player);
+            saveData.GremlinStats = state.ToSaveData();
+            state.Reset();
+        }
+        return Task.CompletedTask;
     }
-
-    internal void SwapTo(Creature target)
-    {
-        if (!_rotation.Contains(target)) throw new InvalidOperationException($"{target} is not alive.");
-        if (target == Active) return;
-        var current = _rotation.First!.Value;
-        _rotation.RemoveFirst();
-        _rotation.AddLast(current);
-        _rotation.Remove(target);
-        _rotation.AddFirst(target);
-        Log.Info($"[GremlinState] SwapTo {target} | previous={current} | rotation={RotationString()}");
-    }
-
-    internal void Kill(Creature gremlin)
-    {
-        if (!_hp.ContainsKey(gremlin)) throw new ArgumentException($"Unknown gremlin {gremlin}.");
-        _rotation.Remove(gremlin);
-        _hp[gremlin] = (0, _hp[gremlin].MaxHp);
-        Log.Info($"[GremlinState] Killed {gremlin} | rotation={RotationString()}");
-    }
-
-    internal void Revive(Creature gremlin, int hp, int maxHp)
-    {
-        if (!_hp.ContainsKey(gremlin)) throw new ArgumentException($"Unknown gremlin {gremlin}.");
-        if (_rotation.Contains(gremlin)) throw new InvalidOperationException($"{gremlin} is already alive.");
-        _hp[gremlin] = (hp, Math.Max(maxHp, hp));
-        _rotation.AddLast(gremlin);
-        Log.Info($"[GremlinState] Revived {gremlin} hp={hp} maxHp={maxHp} | rotation={RotationString()}");
-    }
-
-    internal void SaveHp(int hp)
-    {
-        if (Active == null) return;
-        _hp[Active] = (hp, _hp[Active].MaxHp);
-        Log.Info($"[GremlinState] SaveHp {Active} hp={hp}");
-    }
-
-    internal (int Hp, int MaxHp) HpOf(Creature gremlin) =>
-        _hp.TryGetValue(gremlin, out var v) ? v : throw new ArgumentException($"Unknown gremlin {gremlin}.");
-
-   
-
-    public IEnumerable<(Creature Gremlin, int Hp, int MaxHp)> GetRotationState() =>
-        _rotation.Select(g => (g, _hp[g].Hp, _hp[g].MaxHp));
-
-    private string RotationString() =>
-        string.Join(" -> ", _rotation.Select(g => $"{g}({_hp[g].Hp}/{_hp[g].MaxHp})"));
+    
+    
 }

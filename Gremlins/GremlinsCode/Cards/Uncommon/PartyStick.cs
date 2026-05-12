@@ -18,9 +18,9 @@ public class PartyStick : GremlinsCardModel, IAfterGremlinSwap
         WithEnergy(1);
     }
 
-    public async Task AfterGremlinSwap(PlayerChoiceContext ctx, Player player)
+    public async Task AfterGremlinSwap(PlayerChoiceContext ctx, Player player, GremlinSwapType  gremlinSwapType)
     {
-        if (Owner != player || Pile is not { Type: PileType.Hand }) return;
+        if (Owner != player || Pile is not { Type: PileType.Hand } || gremlinSwapType != GremlinSwapType.Move) return;
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
 }

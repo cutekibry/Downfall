@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -23,8 +22,8 @@ public abstract class GremlinsMonsterModel : CustomMonsterModel
     protected abstract string IdleAnimationName { get; }
 
 
-    public override int MinInitialHp => 10;
-    public override int MaxInitialHp => 10;
+    public override int MinInitialHp => 16;
+    public override int MaxInitialHp => 16;
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
@@ -33,13 +32,16 @@ public abstract class GremlinsMonsterModel : CustomMonsterModel
         return new MonsterMoveStateMachine([initialState], initialState);
     }
 
-    public override CreatureAnimator? SetupCustomAnimationStates(MegaSprite controller)
+    public override CreatureAnimator SetupCustomAnimationStates(MegaSprite controller)
     {
         return SetupAnimationState(controller, IdleAnimationName);
     }
 
     public virtual Task TriggerGremlinBonus(PlayerChoiceContext ctx, Player player)
         => Task.CompletedTask;
+
+    public virtual bool ShouldSave => true;
+
 }
 
 public class MadGremlin : GremlinsMonsterModel
@@ -66,6 +68,7 @@ public class ShieldGremlin : GremlinsMonsterModel
     {
         await CreatureCmd.GainBlock(player.Creature, 2, ValueProp.Unpowered, null);
     }
+    
 }
 
 public class FatGremlin : GremlinsMonsterModel
@@ -80,7 +83,6 @@ public class FatGremlin : GremlinsMonsterModel
         if (combatState == null) return;
         await PowerCmd.Apply<WeakPower>(ctx, combatState.HittableEnemies, 1, player.Creature, null);
     }
-
 }
 
 public class SneakGremlin : GremlinsMonsterModel
@@ -125,4 +127,6 @@ public class GremlinNob : GremlinsMonsterModel
 
     public override string CustomVisualPath =>
         "res://Gremlins/scenes/gremlins/nob/nob_combat.tscn";
+
+    public override bool ShouldSave => false;
 }

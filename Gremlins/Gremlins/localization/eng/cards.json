@@ -85,7 +85,7 @@
   "GREMLINS-MOCKERY.title": "Mockery",
   "GREMLINS-NECROMANCY.description": "Requires 3 [gold]Wiz[/gold].\nConsume all [gold]Wiz to resurrect a random Gremlin with [/gold]{NecromancyPower:diff()} HP. Exhaust.",
   "GREMLINS-NECROMANCY.title": "Necromancy",
-  "GREMLINS-NOB.description": "Gain {NobPower:diff()} [gold]Temp[/gold]_HP.\nMutate into *Gremlin [gold]Nob until you run out of [/gold]*Temp [gold]HP[/gold].",
+  "GREMLINS-NOB.description": "Gain {TempHP:diff()} [gold]Temp HP[/gold].\nMutate into [gold]Gremlin Nob[/gold] until you run out of [gold]Temp HP[/gold].",
   "GREMLINS-NOB.title": "NOB",
   "GREMLINS-PARTY_STICK.description": "If this is in your Hand, whenever you [gold]Swap[/gold], gain {Energy:energyIcons()}.",
   "GREMLINS-PARTY_STICK.title": "Party Stick",

@@ -79,16 +79,24 @@ public partial class NGremlinsCreatureVisuals : NCreatureVisuals
         tween.Chain().TweenCallback(Callable.From(() => node.Visible = false));
     }
 
+    private NCreature? _playerNode;
+    
+    public override void _Ready()
+    {
+        base._Ready();
+        _playerNode = GetParentOrNull<NCreature>() 
+                      ?? GetParent()?.GetParentOrNull<NCreature>();
+    }
+
     private void SyncBoundsToActive()
     {
-        var playerNode = GetParent<NCreature>();
-        if (playerNode == null || _activeGremlin == null) return;
+        if (_playerNode == null || _activeGremlin == null) return;
 
         var activeNode = NCombatRoom.Instance?.GetCreatureNode(_activeGremlin);
         if (activeNode == null) return;
 
-        var stateDisplay = playerNode.GetNodeOrNull<NCreatureStateDisplay>("%HealthBar");
-        stateDisplay?.SetCreatureBounds(playerNode.Hitbox);
+        var stateDisplay = _playerNode.GetNodeOrNull<NCreatureStateDisplay>("%HealthBar");
+        stateDisplay?.SetCreatureBounds(_playerNode.Hitbox);
     }
 
     private int GetSlot(Creature gremlin) => _rotation.IndexOf(gremlin);
@@ -101,7 +109,7 @@ public partial class NGremlinsCreatureVisuals : NCreatureVisuals
 
     private void ApplySlotPositions(bool animated)
     {
-        var anchor = GetParent<NCreature>()?.GlobalPosition ?? GlobalPosition;
+        var anchor = _playerNode?.GlobalPosition ?? GlobalPosition;
         var living = _rotation.Where(g => g.IsAlive).ToList();
 
         for (var slot = 0; slot < living.Count; slot++)

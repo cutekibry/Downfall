@@ -56,5 +56,11 @@
   "GREMLINS-FURIOUS_POWER.smartDescription": "Whenever you would gain [gold]Block[/gold] this turn, instead deal that much damage to ALL enemies.",
   "GREMLINS-HECKLE_POWER.title": "Heckle",
   "GREMLINS-HECKLE_POWER.description": "Whenever you apply a debuff to an enemy, gain [gold]Temp HP[/gold].",
-  "GREMLINS-HECKLE_POWER.smartDescription": "Whenever you apply a debuff to an enemy, gain [blue]{Amount}[/blue] [gold]Temp HP[/gold]."
+  "GREMLINS-HECKLE_POWER.smartDescription": "Whenever you apply a debuff to an enemy, gain [blue]{Amount}[/blue] [gold]Temp HP[/gold].",
+  "GREMLINS-GREMLIN_POWER.title": "Gremlins",
+  "GREMLINS-GREMLIN_POWER.description": "[gold]Mad Gremlin[/gold]:\nWhenever you are attacked, gain [blue]2[/blue] [gold]Strength[/gold] this turn.\n[gold]Sneak Gremlin[/gold]: \nWhenever you play an Attack, deal [blue]2[/blue] damage to a random enemy.\nAttacks that cost [blue]0[/blue] cost deal [blue]2[/blue] additional damage.\n[gold]Shield Gremlin[/gold]:\nWhenever you play an Skill, gain [blue]2[/blue] [gold]Block[/gold].\n[gold]Fat Gremlin[/gold]:\nWhenever you play an Attack, apply [blue]1[/blue] [gold]Weak[/gold] to ALL enemies.\n[gold]Wizard Gremlin[/gold]:\nWhenever you play an Skill, gain [blue]1[/blue] [gold]Wiz[/gold].",
+  "GREMLINS-GREMLIN_POWER.smartDescription": "{GremlinVariant:choose(None|MadGremlin|SneakGremlin|ShieldGremlin|FatGremlin|WizardGremlin|GremlinNob):No effect.|[gold]Mad Gremlin[/gold]:\nWhenever you are attacked, gain [blue]2[/blue] [gold]Strength[/gold] this turn.|[gold]Sneak Gremlin[/gold]:\nWhenever you play an Attack, deal [blue]2[/blue] damage to a random enemy.\nAttacks that cost [blue]0[/blue] cost deal [blue]2[/blue] additional damage.|[gold]Shield Gremlin[/gold]:\nWhenever you play an Skill, gain [blue]2[/blue] Block.|[gold]Fat Gremlin[/gold]:\nWhenever you play an Attack, apply [blue]1[/blue] [gold]Weak[/gold] to ALL enemies.|[gold]Wizard Gremlin[/gold]:\nWhenever you play an Skill, gain [blue]1[/blue] [gold]Wiz[/gold].|[gold]Gremlin Nob[/gold]:\nNo effect.}",
+  "GREMLINS-NOB_POWER.title": "Gremlin Nob",
+  "GREMLINS-NOB_POWER.description": "Mutate into [gold]Gremlin Nob[/gold] until you run out of [gold]Temp HP[/gold].",
+  "GREMLINS-NOB_POWER.smartDescription": "Mutate into [gold]Gremlin Nob[/gold] until you run out of [gold]Temp HP[/gold]."
 }

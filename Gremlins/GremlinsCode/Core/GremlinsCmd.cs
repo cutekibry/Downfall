@@ -1,11 +1,15 @@
 ﻿using Gremlins.GremlinsCode.Events;
 using Gremlins.GremlinsCode.Vfx;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Random;
@@ -15,21 +19,21 @@ namespace Gremlins.GremlinsCode.Core;
 
 public static class GremlinsCmd
 {
-    public static async Task SwitchGremlin(PlayerChoiceContext? ctx, Player player, Creature gremlin)
+    public static async Task SwitchGremlin(PlayerChoiceContext ctx, Player player, Creature gremlin, GremlinSwapType  gremlinSwapType)
     {
         if (player.Creature.CombatState == null) return;
         var state = GremlinsRunModel.GetState(player);
         var node  = NCombatRoom.Instance?.GetCreatureNode(player.Creature);
         if (node?.Visuals is NGremlinsCreatureVisuals visuals)
             visuals.SwitchToGremlin(gremlin, state.Bench.Prepend(gremlin));
-        if (ctx == null) return;
-        await GremlinsHook.AfterGremlinSwap(player.Creature.CombatState, ctx, player);
+        await GremlinsHook.AfterGremlinSwap(player.Creature.CombatState, ctx, player, gremlinSwapType);
     }
     
     public static void KillGremlin(Creature playerCreature, Creature gremlin)
     {
         var node = NCombatRoom.Instance?.GetCreatureNode(playerCreature);
-        if (node?.Visuals is NGremlinsCreatureVisuals visuals)
+        
+        if (node?.Visuals is NGremlinsCreatureVisuals)
             NGremlinsCreatureVisuals.KillGremlin(gremlin);
     }
 
@@ -41,8 +45,13 @@ public static class GremlinsCmd
         var state = GremlinsRunModel.GetState(player);
         var bench = state.Bench.ToList();
 
-        if (bench.Count == 0) return null;
-        if (bench.Count == 1) return bench[0];
+        switch (bench.Count)
+        {
+            case 0:
+                return null;
+            case 1:
+                return bench[0];
+        }
 
         var choiceId = RunManager.Instance.PlayerChoiceSynchronizer.ReserveChoiceId(player);
         await ctx.SignalPlayerChoiceBegun(PlayerChoiceOptions.None);
@@ -99,9 +108,7 @@ public static class GremlinsCmd
         if (bench.Count == 0) return;
         await Swap(ctx, player, bench[Rng.Chaotic.NextInt(bench.Count)]);
     }
-
-    public static List<Creature> GetLivingGremlins(Player player) =>
-        GremlinsRunModel.GetState(player).Bench.ToList();
+    
 
     public static int GetLivingGremlinCount(Player player)
     {
@@ -109,6 +116,7 @@ public static class GremlinsCmd
         return (state.Active != null ? 1 : 0) + state.Bench.Count();
     }
 
+    /*
     public static Creature? ResurrectRandomGremlin(Player player, int hp)
     {
         var state = GremlinsRunModel.GetState(player);
@@ -127,29 +135,65 @@ public static class GremlinsCmd
             visuals.ReviveGremlin(gremlin);
 
         return gremlin;
-    }
+    }*/
+    
+    private static readonly LocString NoGremlinSwap = new("combat_messages", "NO_GREMLIN_SWAP");
 
-    public static async Task SwapToGremlin(PlayerChoiceContext ctx, Player player, Creature gremlin)
+    private static async Task Swap(PlayerChoiceContext ctx, Player player, Creature target)
     {
-        if (!GremlinsRunModel.GetState(player).Gremlins.Contains(gremlin)) return;
-        await Swap(ctx, player, gremlin);
+        if (!GremlinsHook.ShouldGremlinSwap(player.Creature.CombatState!, player, target))
+        {
+            if (LocalContext.IsMe(player)) ThinkCmd.Play(NoGremlinSwap, player.Creature, 2.0);
+            return;
+        }
+        var state = GremlinsRunModel.GetState(player);
+        state.SaveHp(player.Creature.CurrentHp);
+        state.SwapTo(target);
+        await ApplySwap(ctx, player, state, target, GremlinSwapType.Move);
     }
 
+    
+    // GremlinsCmd
+    public static void AddGremlin(Player player, MonsterModel model, int hp, int maxHp)
+    {
+        var combatState = CombatManager.Instance.DebugOnlyGetState();
+        if (combatState == null) return;
+        if (player.PlayerCombatState == null) return;
+
+        var state    = GremlinsRunModel.GetState(player);
+        var mutable  = model.ToMutable();
+        var creature = combatState.CreateCreature(mutable, CombatSide.Player, null);
+        mutable.SetUpForCombat();
+        creature.PetOwner  = player;
+        creature.MaxHp     = maxHp;
+        creature.CurrentHp = hp;
+        player.PlayerCombatState.AddPetInternal(creature);
+        state.Register(creature, hp, maxHp);
+        NCombatRoom.Instance!.AddCreature(creature);
+        
+        var creatureNode = NCombatRoom.Instance.GetCreatureNode(player.Creature);
+        if (creatureNode?.Visuals is NGremlinsCreatureVisuals visuals)
+            visuals.ArrangeGremlins(state.Gremlins);
+    }
+    
     public static async Task TriggerGremlinBonus(PlayerChoiceContext ctx, Player player)
     {
         var gremlin = GetCurrentGremlin(player);
         if (gremlin?.Monster is not GremlinsMonsterModel monster) return;
         await monster.TriggerGremlinBonus(ctx, player);
     }
-
-    private static async Task Swap(PlayerChoiceContext ctx, Player player, Creature target)
+    
+    public static async Task ApplySwap(PlayerChoiceContext ctx, Player player, GremlinState state, Creature target, GremlinSwapType swapType)
     {
-        var state = GremlinsRunModel.GetState(player);
-        state.SaveHp((int)player.Creature.CurrentHp);
-        state.SwapTo(target);
         var (hp, maxHp) = state.HpOf(target);
-        await SwitchGremlin(ctx, player, target);
+        await SwitchGremlin(ctx, player, target, swapType);
         player.Creature.SetMaxHpInternal(maxHp);
         player.Creature.SetCurrentHpInternal(hp);
     }
+}
+
+public enum GremlinSwapType
+{
+    Death,
+    Move
 }

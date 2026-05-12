@@ -8,9 +8,9 @@ namespace Gremlins.GremlinsCode.Powers;
 
 public class EnthusiasmPower : GremlinsPowerModel, IAfterGremlinSwap
 {
-    public async Task AfterGremlinSwap(PlayerChoiceContext ctx, Player player)
+    public async Task AfterGremlinSwap(PlayerChoiceContext ctx, Player player,  GremlinSwapType  gremlinSwapType)
     {
-        if (player.Creature != Owner) return;
+        if (player.Creature != Owner || gremlinSwapType != GremlinSwapType.Move) return;
         Flash();
         await CardPileCmd.Draw(ctx, Amount, player);
     }
