@@ -10,7 +10,7 @@ namespace Gremlins.GremlinsCode.Cards.Basic;
 [Pool(typeof(GremlinsCardPool))]
 public class StrikeGremlins : GremlinsCardModel
 {
-    public StrikeGremlins() : base(1, CardType.Attack, CardRarity.Basic, CustomTargetType.AnyAttackingEnemy)
+    public StrikeGremlins() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
     {
         WithTags(CardTag.Strike);
         WithDamage(6, 3);
@@ -19,7 +19,6 @@ public class StrikeGremlins : GremlinsCardModel
 
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        //await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_slash").Execute(ctx);
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
     }
 }
