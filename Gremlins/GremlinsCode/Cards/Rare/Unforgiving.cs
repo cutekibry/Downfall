@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Gremlins.GremlinsCode.Core;
+using Gremlins.GremlinsCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -10,10 +11,12 @@ public class Unforgiving : GremlinsCardModel
 {
     public Unforgiving() : base(3, CardType.Power, CardRarity.Rare, TargetType.None)
     {
+        WithPower<UnforgivingPower>(1);
     }
 
     // TODO: Implement
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await CommonActions.ApplySelf<UnforgivingPower>(ctx, this);
     }
 }

@@ -13,7 +13,7 @@ namespace Gremlins.GremlinsCode.Core;
 
 public class GremlinsRunModel() : CustomSingletonModel(false, true)
 {
-    private static readonly CustomMonsterModel[] StartingGremlins =
+    public static readonly CustomMonsterModel[] StartingGremlins =
     [
         ModelDb.Monster<ShieldGremlin>(),
         ModelDb.Monster<MadGremlin>(),
@@ -81,7 +81,14 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
             var creatureNode = NCombatRoom.Instance?.GetCreatureNode(player.Creature);
             if (creatureNode?.Visuals is NGremlinsCreatureVisuals visuals)
                 visuals.ArrangeGremlins(state.Gremlins);
+            
+            var active = state.Active;
+            if (active == null) continue;
+            player.Creature.SetMaxHpInternal(active.MaxHp);
+            player.Creature.SetCurrentHpInternal(active.CurrentHp);
         }
+        
+        
 
         return Task.CompletedTask;
     }
@@ -96,11 +103,10 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
             if (player.Character is not Gremlins) continue;
             var state    = GetState(player);
             var saveData = DownfallSaveManager.GetPlayerData(player);
-            saveData.GremlinStats = state.ToSaveData();
+            saveData.GremlinStats = state.ToSaveData(player);
             state.Reset();
         }
         return Task.CompletedTask;
     }
-    
     
 }

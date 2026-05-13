@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Gremlins.GremlinsCode.Core;
+using Gremlins.GremlinsCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -10,10 +11,11 @@ public class TargetWounds : GremlinsCardModel
 {
     public TargetWounds() : base(1, CardType.Power, CardRarity.Rare, TargetType.None)
     {
+        WithPower<TargetWoundsPower>(3, 2);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await CommonActions.ApplySelf<TargetWoundsPower>(ctx, this);
     }
 }

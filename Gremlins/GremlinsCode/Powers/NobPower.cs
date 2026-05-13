@@ -1,4 +1,5 @@
-﻿using Downfall.DownfallCode.Utils.Sound;
+﻿using Downfall.DownfallCode.Powers;
+using Downfall.DownfallCode.Utils.Sound;
 using Gremlins.GremlinsCode.Core;
 using Gremlins.GremlinsCode.Events;
 using MegaCrit.Sts2.Core.Commands;
@@ -32,15 +33,25 @@ public class NobPower() : GremlinsPowerModel(PowerType.Buff, PowerStackType.Sing
         TalkCmd.Play(GremlinNobDialogue, a, VfxColor.Red);
         SoundEffect.Play();
     }
-    
-    
 
-    protected override Task AfterRemoved(PlayerChoiceContext ctx, Creature oldOwner)
+
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext ctx, PowerModel power, decimal amount,
+        Creature? applier,
+        CardModel? cardSource)
     {
+        if (power is TempHpPower && power.Amount <= 0)
+        {
+            await PowerCmd.Remove(this);
+        }
+    }
+
+
+    protected override async Task AfterRemoved(PlayerChoiceContext ctx, Creature oldOwner)
+    {
+        if (Owner.Player == null) return;
         var a = GremlinsCmd.GetCurrentGremlin(Owner.Player);
-        if (a is not { Monster: GremlinNob }) return Task.CompletedTask;
-        GremlinsCmd.KillGremlin(Owner, a);
-        return Task.CompletedTask;
+        if (a is not { Monster: GremlinNob }) return;
+        await GremlinsCmd.KillGremlin(ctx, Owner.Player, a);
     }
 
     public bool ShouldGremlinSwap(Player player, Creature gremlin) =>

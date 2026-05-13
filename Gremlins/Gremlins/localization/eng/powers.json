@@ -62,5 +62,14 @@
   "GREMLINS-GREMLIN_POWER.smartDescription": "{GremlinVariant:choose(None|MadGremlin|SneakGremlin|ShieldGremlin|FatGremlin|WizardGremlin|GremlinNob):No effect.|[gold]Mad Gremlin[/gold]:\nWhenever you are attacked, gain [blue]2[/blue] [gold]Strength[/gold] this turn.|[gold]Sneak Gremlin[/gold]:\nWhenever you play an Attack, deal [blue]2[/blue] damage to a random enemy.\nAttacks that cost [blue]0[/blue] cost deal [blue]2[/blue] additional damage.|[gold]Shield Gremlin[/gold]:\nWhenever you play an Skill, gain [blue]2[/blue] Block.|[gold]Fat Gremlin[/gold]:\nWhenever you play an Attack, apply [blue]1[/blue] [gold]Weak[/gold] to ALL enemies.|[gold]Wizard Gremlin[/gold]:\nWhenever you play an Skill, gain [blue]1[/blue] [gold]Wiz[/gold].|[gold]Gremlin Nob[/gold]:\nNo effect.}",
   "GREMLINS-NOB_POWER.title": "Gremlin Nob",
   "GREMLINS-NOB_POWER.description": "Mutate into [gold]Gremlin Nob[/gold] until you run out of [gold]Temp HP[/gold].",
-  "GREMLINS-NOB_POWER.smartDescription": "Mutate into [gold]Gremlin Nob[/gold] until you run out of [gold]Temp HP[/gold]."
+  "GREMLINS-NOB_POWER.smartDescription": "Mutate into [gold]Gremlin Nob[/gold] until you run out of [gold]Temp HP[/gold].",
+  "GREMLINS-SHADOW_SHIV_POWER.title": "Shadow Shiv",
+  "GREMLINS-SHADOW_SHIV_POWER.description": "Whenever you play an Attack that doesn't [gold]Exhaust[/gold], gain a [gold]Shiv[/gold].",
+  "GREMLINS-SHADOW_SHIV_POWER.smartDescription": "Whenever you play an Attack that doesn't [gold]Exhaust[/gold], gain {Amount:plural:a [gold]Shiv[/gold]|[blue]{}[/blue] [gold]Shivs[/gold]}.",
+  "GREMLINS-TARGET_WOUNDS_POWER.title": "Target Wounds",
+  "GREMLINS-TARGET_WOUNDS_POWER.description": "Deal additional damage to [gold]Weakened[/gold] enemies. ",
+  "GREMLINS-TARGET_WOUNDS_POWER.smartDescription": "Deal [blue]{Amount}[/blue] additional damage to [gold]Weakened[/gold] enemies. ",
+  "GREMLINS-UNFORGIVING_POWER.title": "Unforgiving",
+  "GREMLINS-UNFORGIVING_POWER.description": "You cannot lose [gold]Strength[/gold].",
+  "GREMLINS-UNFORGIVING_POWER.smartDescription": "You cannot lose [gold]Strength[/gold]."
 }

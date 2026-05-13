@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Downfall.DownfallCode.Saves;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer.Serialization;
@@ -12,22 +13,20 @@ public class GremlinState
     private static readonly Logger Log = GremlinsMainFile.Logger;
 
     private readonly LinkedList<Creature> _rotation = [];
-    private readonly Dictionary<Creature, (int Hp, int MaxHp)> _hp = new();
     private readonly List<Creature> _gremlins = [];
+    
     public Creature? Next => _rotation.First?.Next?.Value;
     public IReadOnlyList<Creature> Gremlins => _gremlins;
-    public Creature? Active                 => _rotation.First?.Value;
-    public IEnumerable<Creature> Bench      => _rotation.Skip(1);
+    public Creature? Active => _rotation.First?.Value;
+    public IEnumerable<Creature> Bench => _rotation.Skip(1);
 
-    internal void Register(Creature gremlin, int hp, int maxHp)
+    internal void Register(Creature gremlin)
     {
         ArgumentNullException.ThrowIfNull(gremlin);
-        if (_hp.ContainsKey(gremlin)) throw new InvalidOperationException($"{gremlin} already registered.");
+        if (_gremlins.Contains(gremlin)) throw new InvalidOperationException($"{gremlin} already registered.");
         _gremlins.Add(gremlin);
-        _hp[gremlin] = (hp, maxHp);
         _rotation.AddLast(gremlin);
     }
-  
 
     internal void SwapTo(Creature target)
     {
@@ -42,41 +41,23 @@ public class GremlinState
 
     internal void Kill(Creature gremlin)
     {
-        if (!_hp.ContainsKey(gremlin)) throw new ArgumentException($"Unknown gremlin {gremlin}.");
+        if (!_gremlins.Contains(gremlin)) throw new ArgumentException($"Unknown gremlin {gremlin}.");
         _rotation.Remove(gremlin);
         _gremlins.Remove(gremlin);
-        _hp.Remove(gremlin);
     }
-    
+
     internal void Reset()
     {
         _rotation.Clear();
-        _hp.Clear();
         _gremlins.Clear();
     }
     
-   
-
-    internal void SaveHp(int hp)
-    {
-        if (Active == null) return;
-        _hp[Active] = (hp, _hp[Active].MaxHp);
-        Log.Info($"[GremlinState] SaveHp {Active} hp={hp}");
-    }
-
-    internal (int Hp, int MaxHp) HpOf(Creature gremlin) =>
-        _hp.TryGetValue(gremlin, out var v) ? v : throw new ArgumentException($"Unknown gremlin {gremlin}.");
-    
-    /// <summary>Snapshot the full rotation into save data (index 0 = active).</summary>
-    public List<GremlinSaveData> ToSaveData() =>
-        _rotation.Where(e => e.Monster is GremlinsMonsterModel { ShouldSave: true })
-            .Select(g => new GremlinSaveData
-            {
-                ModelId = g.ModelId,
-                Hp      = _hp[g].Hp,
-                MaxHp   = _hp[g].MaxHp,
-            })
-            .ToList();
-    
+    public List<GremlinSaveData> ToSaveData(Player player) => _rotation
+        .Where(g => g.Monster is GremlinsMonsterModel { ShouldSave: true })
+        .Select(g => new GremlinSaveData
+        {
+            ModelId = g.Monster!.Id,
+            Hp      = g == Active ? player.Creature.CurrentHp : g.CurrentHp,
+            MaxHp   = g == Active ? player.Creature.MaxHp : g.MaxHp,
+        }).ToList();
 }
-

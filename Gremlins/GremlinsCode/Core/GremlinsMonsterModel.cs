@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
@@ -96,14 +97,9 @@ public class SneakGremlin : GremlinsMonsterModel
     public override async Task TriggerGremlinBonus(PlayerChoiceContext ctx, Player player)
     {
         var combatState = player.Creature.CombatState;
-        if (combatState == null) return;
-        var attack = DamageCmd.Attack(2);
-        attack.Attacker = player.Creature;
-        attack._attackerAnimName = "Attack";
-        attack._attackerAnimDelay = player.Character.AttackAnimDelay;
-        attack.ModelSource = this;
-        attack._sourceType = AttackCommand.SourceType.Monster;
-        await attack.TargetingRandomOpponents(combatState).Execute(ctx);
+        var randomEnemy = combatState?.HittableEnemies.TakeRandom(1, combatState.RunState.Rng.CombatTargets).FirstOrDefault();
+        if (randomEnemy == null) return;
+        await CreatureCmd.Damage(ctx, randomEnemy, 2, ValueProp.Unpowered, player.Creature);
     }
 }
 
