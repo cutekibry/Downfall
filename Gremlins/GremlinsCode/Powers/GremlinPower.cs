@@ -1,10 +1,14 @@
 ﻿using BaseLib.Patches.Localization;
+using Downfall.DownfallCode.Commands;
 using Downfall.DownfallCode.Powers;
+using Gremlins.GremlinsCode.Cards.Token;
 using Gremlins.GremlinsCode.Core;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,6 +21,18 @@ namespace Gremlins.GremlinsCode.Powers;
 
 public class GremlinPower(): GremlinsPowerModel(PowerType.Buff, PowerStackType.Single), IAddDumbVariablesToPowerDescription
 {
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
+    {
+        if (Owner != player.Creature) return;
+        var gremlin = GremlinsCmd.GetCurrentGremlin(player);
+        if (gremlin?.Monster is not GremlinsMonsterModel monster) return;
+        if (monster is not GremlinNob) return;
+        await DownfallCardCmd.GiveCard<Bellow>(player, PileType.Hand);
+        await DownfallCardCmd.GiveCard<SkullBash>(player, PileType.Hand);
+        await DownfallCardCmd.GiveCard<Rush>(player, PileType.Hand);
+    }
+
+
     protected override async Task BeforeCardPlayed(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var player = cardPlay.Card.Owner;

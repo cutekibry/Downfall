@@ -10,10 +10,12 @@ public class Rush : GremlinsCardModel
 {
     public Rush() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
     {
+        WithKeywords(CardKeyword.Ethereal, CardKeyword.Exhaust);
+        WithDamage(14, 2);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
     }
 }
