@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dyn0mhbismsro" path="res://Gremlins/images/character/selection_screen.png" id="1_0f1we"]
 
-
 [node name="WatcherBg" type="Control"]
 layout_mode = 3
 anchors_preset = 8
