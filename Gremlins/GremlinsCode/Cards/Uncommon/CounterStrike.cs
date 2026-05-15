@@ -14,8 +14,7 @@ public class CounterStrike : GremlinsCardModel
         WithDamage(8, 2);
         WithRepeat(2, 1);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);

@@ -17,8 +17,7 @@ public class ShadowShiv : GremlinsCardModel
         WithTip(typeof(Shiv));
         WithTip(CardKeyword.Exhaust);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<ShadowShivPower>(ctx, this);

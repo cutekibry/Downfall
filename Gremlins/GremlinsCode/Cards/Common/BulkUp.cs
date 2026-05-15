@@ -13,9 +13,7 @@ public class BulkUp : GremlinsCardModel
     {
         WithTempHp(4,2);
     }
-
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCmd.GainTempHp(ctx, this);

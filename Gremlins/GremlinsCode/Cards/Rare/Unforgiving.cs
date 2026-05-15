@@ -13,8 +13,7 @@ public class Unforgiving : GremlinsCardModel
     {
         WithPower<UnforgivingPower>(1);
     }
-
-    // TODO: Implement
+    
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<UnforgivingPower>(ctx, this);
