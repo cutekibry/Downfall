@@ -11,7 +11,7 @@ public class CatScratch : GremlinsCardModel
     public CatScratch() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
         WithDamage(2);
-        WithRepeat(3);
+        WithRepeat(3, 1);
     }
     
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
