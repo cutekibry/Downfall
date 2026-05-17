@@ -11,7 +11,7 @@ namespace Gremlins.GremlinsCode.Cards.Uncommon;
 [Pool(typeof(GremlinsCardPool))]
 public class ArmsTheft : GremlinsCardModel
 {
-    public ArmsTheft() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public ArmsTheft() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
         WithPower<WeakPower>(1, 1);
         WithPower<StrengthPower>(1, 1);
