@@ -10,6 +10,7 @@ public class TagTeam : GremlinsCardModel
 {
     public TagTeam() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self)
     {
+        WithKeyword(CardKeyword.Retain, UpgradeType.Add);
     }
     
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
