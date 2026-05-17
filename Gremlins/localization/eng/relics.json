@@ -18,7 +18,7 @@
   "GREMLINS-MAGIC_MALLET.description": "Whenever you apply Weak, gain 1 Wiz, up to 3 times per turn.",
   "GREMLINS-MAGIC_MALLET.flavor": "Stubs toes twice as hard.",
   "GREMLINS-MOB_LEADERS_CROWN.title": "Mob Leader's Crown",
-  "GREMLINS-MOB_LEADERS_CROWN.description": "Replaces {{R|Mob Leader's Staff}}. The first time you shuffle your Draw Pile each turn, gain @GrE, draw 1 card, and Swap to the next Gremlin.",
+  "GREMLINS-MOB_LEADERS_CROWN.description": "Replaces {{R|Mob Leader's Staff}}. The first time you shuffle your [gold]Draw Pile[/gold] each turn, gain @GrE, draw 1 card, and Swap to the next Gremlin.",
   "GREMLINS-MOB_LEADERS_CROWN.flavor": "The fancier the symbol of office, the more likely it is to be stolen.",
   "GREMLINS-MOB_LEADERS_STAFF.title": "Mob Leader's Staff",
   "GREMLINS-MOB_LEADERS_STAFF.description": "At the start of each combat, gain @GrE, draw 1 card, and Swap to the next Gremlin.",
