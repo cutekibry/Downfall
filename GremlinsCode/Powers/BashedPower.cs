@@ -20,7 +20,7 @@ public class BashedPower : GremlinsPowerModel
         await CreatureCmd.Damage(ctx, Owner, Amount, ValueProp.Unpowered | ValueProp.Move, creature);
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext ctx, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext ctx, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Side) return;
         await PowerCmd.Remove(this);
