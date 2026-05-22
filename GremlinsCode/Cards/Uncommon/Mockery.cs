@@ -18,7 +18,7 @@ public class Mockery : GremlinsCardModel
 
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        var power = (await MyCommonActions.Apply<WeakPower>(ctx, this, cardPlay)).ToList().FirstOrDefault();
+        var power = (await CommonActions.Apply<WeakPower>(ctx, this, cardPlay)).ToList().FirstOrDefault();
         if (power == null || power.Amount < 3) return;
         await CommonActions.CardBlock(this, cardPlay);
     }

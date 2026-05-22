@@ -19,6 +19,6 @@ public class AggressiveDefense : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
-        await MyCommonActions.Apply<BashedPower>(ctx, this, cardPlay);
+        await CommonActions.Apply<BashedPower>(ctx, this, cardPlay);
     }
 }

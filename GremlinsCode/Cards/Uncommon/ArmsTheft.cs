@@ -19,7 +19,7 @@ public class ArmsTheft : GremlinsCardModel
 
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await MyCommonActions.Apply<WeakPower>(ctx, this, cardPlay);
+        await CommonActions.Apply<WeakPower>(ctx, this, cardPlay);
         await DownfallCmd.Steal<StrengthPower>(ctx, cardPlay, this);
     }
 }
