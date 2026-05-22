@@ -21,6 +21,6 @@ public class Exacerbate : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
-        await MyCommonActions.Apply<CrippledPower>(ctx, this, cardPlay);
+        await CommonActions.Apply<CrippledPower>(ctx, this, cardPlay);
     }
 }

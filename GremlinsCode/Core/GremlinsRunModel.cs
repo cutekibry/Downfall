@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Runs;
 
 namespace Gremlins.GremlinsCode.Core;
 
-public class GremlinsRunModel() : CustomSingletonModel(false, true)
+public class GremlinsRunModel() : CustomSingletonModel(HookType.Run)
 {
     public static readonly CustomMonsterModel[] StartingGremlins =
     [
@@ -32,7 +32,7 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
         return state;
     }
 
-
+    // TODO : check if this still triggers
     public override Task AfterActEntered()
     {
         var runState = RunManager.Instance.DebugOnlyGetState();
@@ -54,6 +54,7 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
         return Task.CompletedTask;
     }
 
+    // TODO : check if this still triggers
     public override Task BeforeCombatStart()
     {
         var combatState = CombatManager.Instance.DebugOnlyGetState();
@@ -88,6 +89,7 @@ public class GremlinsRunModel() : CustomSingletonModel(false, true)
         return Task.CompletedTask;
     }
 
+    // TODO : check if this still triggers
     public override Task AfterCombatEnd(CombatRoom room)
     {
         var combatState = CombatManager.Instance.DebugOnlyGetState();

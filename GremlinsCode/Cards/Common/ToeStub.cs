@@ -21,6 +21,6 @@ public class ToeStub : GremlinsCardModel
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
         if (!cardPlay.Target?.HasPower<WeakPower>() ?? true) return;
-        await MyCommonActions.Apply<VulnerablePower>(ctx, this, cardPlay);
+        await CommonActions.Apply<VulnerablePower>(ctx, this, cardPlay);
     }
 }
