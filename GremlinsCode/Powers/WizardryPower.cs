@@ -8,7 +8,8 @@ namespace Gremlins.GremlinsCode.Powers;
 
 public class WizardryPower : GremlinsPowerModel
 {
-    protected override async Task AfterSideTurnStart(PlayerChoiceContext ctx,  CombatSide side,IReadOnlyList<Creature> participants, ICombatState combatState)
+    protected override async Task AfterSideTurnStart(PlayerChoiceContext ctx, CombatSide side,
+        IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Side) return;
         Flash();

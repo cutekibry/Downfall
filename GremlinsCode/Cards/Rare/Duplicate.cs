@@ -6,7 +6,6 @@ using Gremlins.GremlinsCode.Core;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models.Cards;
 
 namespace Gremlins.GremlinsCode.Cards.Rare;
 
@@ -22,7 +21,7 @@ public class Duplicate : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var card = (await DownfallCardCmd.SelectFromHand(ctx, DownfallCardSelectorPrefs.ApplySelectionPrompt, this,
-            filter: e => e.Type == CardType.Attack && !e.IsEcho())).FirstOrDefault();
+            e => e.Type == CardType.Attack && !e.IsEcho())).FirstOrDefault();
         if (card == null) return;
         var copies = Enumerable.Range(0, DynamicVars.Cards.IntValue)
             .Select(_ =>

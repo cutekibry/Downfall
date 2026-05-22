@@ -16,7 +16,8 @@ public class BubbleBarrierPower : GremlinsPowerModel
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
     }
 
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side,
+        IEnumerable<Creature> participants)
     {
         if (side != Owner.Side) return;
         await PowerCmd.Remove(this);
