@@ -20,7 +20,7 @@ public class Rhythm : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await GremlinsCmd.SwapToNext(ctx, Owner);
-        var cards = Owner.GetDraw().Where(e => e.Rarity == CardRarity.Basic).ToList();
+        var cards = Owner.GetDraw(e => e.Rarity == CardRarity.Basic).ToList();
         var selected =
             (await DownfallCardCmd.SelectFromCards(ctx, cards, DownfallCardSelectorPrefs.ToHandSelectionPrompt, this))
             .FirstOrDefault();
