@@ -1,4 +1,5 @@
 using BaseLib.Utils;
+using Downfall.DownfallCode.Extensions;
 using Gremlins.GremlinsCode.Core;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -16,7 +17,7 @@ public class SharpenBlades : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.Draw(this, ctx);
-        Owner.PlayerCombatState?.Hand.Cards
+        Owner.GetHand()
             .Where(e => e.Type == CardType.Attack).ToList()
             .ForEach(e => e.EnergyCost.SetThisTurn(0));
     }

@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Downfall.DownfallCode.Commands;
+using Downfall.DownfallCode.Extensions;
 using Gremlins.GremlinsCode.Core;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -23,10 +24,9 @@ public class SecondVolley : GremlinsCardModel
 
     private static decimal Calc(CardModel card, Creature? _)
     {
-        if (card.Owner.PlayerCombatState == null) return 0;
         var cardsPlayed = CombatManager.Instance.History.CardPlaysFinished.Count(e =>
             e.HappenedThisTurn(card.CombatState) && e.Actor == card.Owner.Creature);
-        var maxDraw = CardPile.MaxCardsInHand - card.Owner.PlayerCombatState.Hand.Cards.Count(e => e != card);
+        var maxDraw = CardPile.MaxCardsInHand - card.Owner.GetHand().Count(e => e != card);
         return Math.Min(maxDraw, cardsPlayed);
     }
 

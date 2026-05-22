@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using Downfall.DownfallCode.Commands;
+using Downfall.DownfallCode.Extensions;
 using Gremlins.GremlinsCode.Core;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -19,7 +20,7 @@ public class ShowOfHands : GremlinsCardModel
 
     private static decimal Calc(CardModel card, Creature? arg2)
     {
-        return card.Owner.PlayerCombatState?.Hand.Cards.Count(e => card != e) ?? 0;
+        return card.Owner.GetHand().Count(e => card != e);
     }
 
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
