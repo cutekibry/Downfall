@@ -159,8 +159,6 @@
   "GREMLINS-WIZARDRY.title": "Wizardry",
   "GREMLINS-WARD.title": "Ward",
   "GREMLINS-WARD.description": "Gain {Block:diff()} [gold]Block[/gold].",
-  "GREMLINS-RHYTHM.selectionScreenPrompt": "Put a Basic card from your [gold]Draw Pile[/gold] into your [gold]Hand[/gold]. ",
   "GREMLINS-BANG.title": "Bang",
-  "GREMLINS-BANG.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\nAdd a [gold]Whiz{IfUpgraded:plus()}[/gold] into your [gold]Discard Pile[/gold].",
-  "GREMLINS-DUPLICATE.selectionScreenPrompt": "Choose an Attack to [gold]Echo[/gold]."
+  "GREMLINS-BANG.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\nAdd a [gold]Whiz{IfUpgraded:plus()}[/gold] into your [gold]Discard Pile[/gold]."
 }

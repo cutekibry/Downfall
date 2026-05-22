@@ -1,4 +1,7 @@
 using BaseLib.Utils;
+using Downfall.DownfallCode.Commands;
+using Downfall.DownfallCode.CustomEnums;
+using Downfall.DownfallCode.Extensions;
 using Gremlins.GremlinsCode.Core;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,11 +21,10 @@ public class Rhythm : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await GremlinsCmd.SwapToNext(ctx, Owner);
-        var cards = Owner.PlayerCombatState?.DrawPile.Cards.Where(e => e.Rarity == CardRarity.Basic).ToList();
-        if (cards == null) return;
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
-        var card = (await CardSelectCmd.FromSimpleGrid(ctx, cards, Owner, prefs)).ToList();
-        card.ForEach(e => e.EnergyCost.SetThisTurn(0));
-        await CardPileCmd.Add(card, PileType.Hand);
+        var cards = Owner.GetDraw().Where(e => e.Rarity == CardRarity.Basic).ToList();
+        var selected = (await DownfallCardCmd.SelectFromCards(ctx, cards, DownfallCardSelectorPrefs.ToHandSelectionPrompt, this)).FirstOrDefault();
+        if (selected == null) return;
+        selected.EnergyCost.SetThisTurn(0);
+        await CardPileCmd.Add(selected, PileType.Hand);
     }
 }
