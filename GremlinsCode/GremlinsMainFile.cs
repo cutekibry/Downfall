@@ -1,9 +1,12 @@
 using System.Reflection;
+using BaseLib.Patches.Saves;
 using Godot;
 using Godot.Bridge;
+using Gremlins.GremlinsCode.Core;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Models;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
 namespace Gremlins.GremlinsCode;
@@ -18,6 +21,12 @@ public partial class GremlinsMainFile : Node
 
     public static void Initialize()
     {
+        ExtendedSaveTypes.RegisterObjectSaveType<GremlinSaveData>(
+            ExtendedSaveTypes.PropertyFunc<GremlinSaveData, ModelId>("ModelId"),
+            ExtendedSaveTypes.PropertyFunc<GremlinSaveData, int>("Hp"),
+            ExtendedSaveTypes.PropertyFunc<GremlinSaveData, int>("MaxHp")
+        );
+        ExtendedSaveTypes.RegisterListSaveType<GremlinSaveData>();
         Harmony harmony = new(ModId);
         var assembly = Assembly.GetExecutingAssembly();
         ScriptManagerBridge.LookupScriptsInAssembly(assembly);

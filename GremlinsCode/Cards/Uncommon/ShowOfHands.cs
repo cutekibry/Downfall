@@ -26,6 +26,6 @@ public class ShowOfHands : GremlinsCardModel
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.Draw(this, ctx);
-        await MyCommonActions.CardCalculatedBlock(this, cardPlay);
+        await CommonActions.CardBlock(this, cardPlay);
     }
 }

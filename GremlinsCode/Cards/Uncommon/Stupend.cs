@@ -26,7 +26,7 @@ public class Stupend : GremlinsCardModel
 
     protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await MyCommonActions.CardCalculatedBlock(this, cardPlay);
+        await CommonActions.CardBlock(this, cardPlay);
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
     }
 }
