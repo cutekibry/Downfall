@@ -17,7 +17,7 @@ public class EdibleArmor : GremlinsCardModel
         WithKeyword(CardKeyword.Exhaust);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var block = Owner.Creature.Block;
         await CreatureCmd.LoseBlock(Owner.Creature, block);

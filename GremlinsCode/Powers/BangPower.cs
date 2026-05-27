@@ -1,5 +1,6 @@
 ﻿using Gremlins.GremlinsCode.Cards;
 using Gremlins.GremlinsCode.Core;
+using Gremlins.GremlinsCode.CustomEnums;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -52,7 +53,7 @@ public class BangPower : GremlinsPowerModel
         var internalData = GetInternalData<Data>();
         if (command != internalData.CommandToModify)
             return;
-        if (internalData.CommandToModify.ModelSource is GremlinsCardModel { IgnoreWiz: true })
+        if (internalData.CommandToModify.ModelSource is CardModel card && card.Tags.Contains(GremlinTag.IgnoreWiz))
         {
             internalData.CommandToModify = null;
             return;

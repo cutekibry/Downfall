@@ -16,7 +16,7 @@ public class Revel : GremlinsCardModel
         WithEnergy(1);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var amount = GremlinsCmd.GetLivingGremlinCount(Owner) * DynamicVars.Energy.IntValue;
         await PlayerCmd.GainEnergy(amount, Owner);

@@ -16,7 +16,7 @@ public class ToeStub : GremlinsCardModel
         WithTip(typeof(WeakPower));
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
         if (!cardPlay.Target?.HasPower<WeakPower>() ?? true) return;

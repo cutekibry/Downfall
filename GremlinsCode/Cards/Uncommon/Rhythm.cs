@@ -17,7 +17,7 @@ public class Rhythm : GremlinsCardModel
         WithCostUpgradeBy(-1);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await GremlinsCmd.SwapToNext(ctx, Owner);
         var cards = Owner.GetDraw(e => e.Rarity == CardRarity.Basic).ToList();

@@ -14,7 +14,7 @@ public class Tricksy : GremlinsCardModel
         WithCards(4, 2);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var cards = await CommonActions.Draw(this, ctx);
         await CardCmd.Discard(ctx, cards.Where(e => e.Type != CardType.Attack));

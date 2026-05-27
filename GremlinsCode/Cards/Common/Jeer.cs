@@ -16,7 +16,7 @@ public class Jeer : GremlinsCardModel
         WithTempHp(2, 2);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
         var target = cardPlay.Target;
