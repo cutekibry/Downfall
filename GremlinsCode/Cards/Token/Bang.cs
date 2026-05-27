@@ -1,6 +1,7 @@
 ﻿using BaseLib.Utils;
 using Downfall.DownfallCode.Commands;
 using Gremlins.GremlinsCode.Cards.Uncommon;
+using Gremlins.GremlinsCode.Core;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.CardPools;
