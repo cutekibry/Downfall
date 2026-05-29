@@ -13,7 +13,7 @@ public class PolishPower : GremlinsPowerModel
     public PolishPower()
     {
         WithTip(StaticHoverTip.Block);
-        WithTip(typeof(Ward));
+        this.WithTip<Ward>();
     }
 
 

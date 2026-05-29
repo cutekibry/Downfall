@@ -1,7 +1,7 @@
 ﻿using BaseLib.Abstracts;
 using BaseLib.Extensions;
-using Gremlins.GremlinsCode.Cards;
 using Gremlins.GremlinsCode.Core;
+using Gremlins.GremlinsCode.CustomEnums;
 using Gremlins.GremlinsCode.Events;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
@@ -26,7 +26,7 @@ public class WizPower : GremlinsPowerModel, IHasSecondAmount
         return Amount < 3 ? "" : $"{DynamicVars["ExtraDamage"].BaseValue}";
     }
 
-    protected override Task AfterApplied(PlayerChoiceContext ctx, Creature? applier, CardModel? cardSource)
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
         UpdateExtraDamage();
         return Task.CompletedTask;
@@ -92,7 +92,7 @@ public class WizPower : GremlinsPowerModel, IHasSecondAmount
         var internalData = GetInternalData<Data>();
         if (command != internalData.CommandToModify)
             return;
-        if (internalData.CommandToModify.ModelSource is GremlinsCardModel { IgnoreWiz: true })
+        if (internalData.CommandToModify.ModelSource is CardModel card && card.Tags.Contains(GremlinTag.IgnoreWiz))
         {
             internalData.CommandToModify = null;
             return;

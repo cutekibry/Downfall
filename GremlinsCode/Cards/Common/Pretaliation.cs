@@ -12,11 +12,11 @@ public class Pretaliation : GremlinsCardModel
     public Pretaliation() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
         WithDamage(6, 2);
-        WithRepeat(2);
-        WithEnemyDamage(3, -2);
+        this.WithRepeat(2);
+        this.WithEnemyDamage(3, -2);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay, DynamicVars.Repeat.IntValue).Execute(ctx);
         await DownfallCmd.EnemyAttackPlayer(ctx, cardPlay, this);

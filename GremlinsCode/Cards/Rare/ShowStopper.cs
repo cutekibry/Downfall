@@ -12,14 +12,14 @@ public class ShowStopper : GremlinsCardModel
     public ShowStopper() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
         WithDamage(3);
-        WithRepeat(5, 1);
-        WithTip(typeof(WizPower));
+        this.WithRepeat(5, 1);
+        this.WithTip<WizPower>();
     }
 
     protected override bool IsPlayable => Owner.Creature.GetPowerAmount<WizPower>() == 7;
     protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<WizPower>() == 7;
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay, DynamicVars.Repeat.IntValue).Execute(ctx);
     }

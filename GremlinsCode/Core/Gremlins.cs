@@ -4,6 +4,7 @@ using Godot;
 using Gremlins.GremlinsCode.Cards.Basic;
 using Gremlins.GremlinsCode.Relics;
 using Gremlins.GremlinsCode.Vfx;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -81,6 +82,15 @@ public abstract class GremlinsRelicModel(RelicRarity rarity) : DownfallRelicMode
 public abstract class GremlinsPowerModel(
     PowerType powerType = PowerType.Buff,
     PowerStackType powerStackType = PowerStackType.Counter) : DownfallPowerModel<Gremlins>(powerType, powerStackType);
+
+public abstract class GremlinsCardModel(
+    int cost,
+    CardType type,
+    CardRarity rarity,
+    TargetType targetType,
+    bool showInCardLibrary = true,
+    bool autoAdd = true)
+    : DownfallCardModel<Gremlins>(cost, type, rarity, targetType, showInCardLibrary, autoAdd);
 
 public class GremlinsPotionPool : DownfallPotionPool<Gremlins>;
 

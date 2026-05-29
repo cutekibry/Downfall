@@ -14,11 +14,11 @@ public class FairyDust : GremlinsCardModel
     {
         WithCostUpgradeBy(-1);
         WithCards(2);
-        WithTip(typeof(Ward));
+        this.WithTip<Ward>();
         WithKeyword(CardKeyword.Exhaust);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCardCmd.GiveCards<Ward>(Owner, PileType.Hand, DynamicVars.Cards.BaseValue);
         await CommonActions.Draw(this, ctx);

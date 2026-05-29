@@ -1,4 +1,5 @@
 using BaseLib.Utils;
+using Gremlins.GremlinsCode.Core;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -16,7 +17,7 @@ public class Bellow : GremlinsCardModel
     {
         WithKeywords(CardKeyword.Ethereal, CardKeyword.Exhaust);
         WithCalculatedVar("Strength", 2, Calc, 1);
-        WithTip(typeof(StrengthPower));
+        this.WithTip<StrengthPower>();
     }
 
     private static decimal Calc(CardModel card, Creature? _)
@@ -24,7 +25,7 @@ public class Bellow : GremlinsCardModel
         return card.CombatState?.HittableEnemies.Count(e => !e.Monster?.IntendsToAttack ?? false) ?? 0;
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var strength = ((CalculatedVar)DynamicVars["Strength"]).Calculate(null);
         await CommonActions.ApplySelf<StrengthPower>(ctx, this, strength);

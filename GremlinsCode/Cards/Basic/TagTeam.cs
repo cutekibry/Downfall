@@ -13,7 +13,7 @@ public class TagTeam : GremlinsCardModel
         WithKeyword(CardKeyword.Retain, UpgradeType.Add);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await GremlinsCmd.SwapToSelected(ctx, Owner);
     }

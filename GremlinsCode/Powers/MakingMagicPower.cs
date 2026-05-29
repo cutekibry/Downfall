@@ -12,7 +12,7 @@ public class MakingMagicPower : GremlinsPowerModel
 {
     public MakingMagicPower()
     {
-        WithTip(typeof(Bang));
+        this.WithTip<Bang>();
     }
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)

@@ -15,11 +15,11 @@ public class IrksomeBlow : GremlinsCardModel
     public IrksomeBlow() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
         WithVar("StrengthEffect", 4, 2);
-        WithTip(typeof(StrengthPower));
+        this.WithTip<StrengthPower>();
         WithDamage(5);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
     }

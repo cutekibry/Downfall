@@ -13,10 +13,10 @@ public class Jeer : GremlinsCardModel
     public Jeer() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
         WithDamage(7, 4);
-        WithTempHp(2, 2);
+        this.WithTempHp(2, 2);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
         var target = cardPlay.Target;

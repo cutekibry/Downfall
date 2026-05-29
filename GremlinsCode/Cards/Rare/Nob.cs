@@ -12,11 +12,11 @@ public class Nob : GremlinsCardModel
 {
     public Nob() : base(4, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
-        WithTempHp(20, 10);
+        this.WithTempHp(20, 10);
         WithPower<NobPower>(1);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCmd.GainTempHp(ctx, this);
         await CommonActions.ApplySelf<NobPower>(ctx, this);

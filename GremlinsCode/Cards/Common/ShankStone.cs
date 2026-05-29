@@ -15,7 +15,7 @@ public class ShankStone : GremlinsCardModel
     {
         WithCards(2, 1);
         WithKeyword(CardKeyword.Unplayable);
-        WithTip(typeof(Shiv));
+        this.WithTip<Shiv>();
     }
 
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)

@@ -15,11 +15,11 @@ public class Astound : GremlinsCardModel
     {
         WithBlock(5, 2);
         WithUpgradingCardTip<Ward>();
-        WithTip(typeof(WizPower));
+        this.WithTip<WizPower>();
         WithCards(2);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardBlock(this, cardPlay);
         if (Owner.Creature.GetPowerAmount<WizPower>() < 3) return;

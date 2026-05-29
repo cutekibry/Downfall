@@ -15,8 +15,7 @@ namespace Gremlins.GremlinsCode.Core;
 
 public class GremlinsRunModel() : CustomSingletonModel(HookType.Run)
 {
-    
-    public static SavedSpireField<Player, List<GremlinSaveData>> GremlinStats = 
+    public static SavedSpireField<Player, List<GremlinSaveData>> GremlinStats =
         new(() => [], "GremlinStats")
         {
             Serializer = (list, writer) =>
@@ -34,11 +33,15 @@ public class GremlinsRunModel() : CustomSingletonModel(HookType.Run)
                     g.Deserialize(reader);
                     list.Add(g);
                 }
+
                 return list;
             }
         };
-    
+
     private static CustomMonsterModel[]? _startingGremlins;
+
+    private static readonly ConditionalWeakTable<Player, GremlinState> States = new();
+
     public static CustomMonsterModel[] StartingGremlins => _startingGremlins ??=
     [
         ModelDb.Monster<ShieldGremlin>(),
@@ -48,8 +51,6 @@ public class GremlinsRunModel() : CustomSingletonModel(HookType.Run)
         ModelDb.Monster<WizardGremlin>()
     ];
 
-    private static readonly ConditionalWeakTable<Player, GremlinState> States = new();
-
     public static GremlinState GetState(Player player)
     {
         if (States.TryGetValue(player, out var state)) return state;
@@ -57,27 +58,23 @@ public class GremlinsRunModel() : CustomSingletonModel(HookType.Run)
         States.Add(player, state);
         return state;
     }
-    
+
     public override Task AfterActEntered()
     {
         var runState = RunManager.Instance.DebugOnlyGetState();
         if (runState is not { ActFloor: 1 }) return Task.CompletedTask;
         foreach (var player in runState.Players)
-        {
             if (player.Character is Gremlins)
-            {
                 GremlinStats.Set(player, StartingGremlins.Select(m => new GremlinSaveData
                 {
                     ModelId = m.Id,
                     Hp = m.MaxInitialHp,
                     MaxHp = m.MaxInitialHp
                 }).ToList());
-            }
-        }
 
         return Task.CompletedTask;
     }
-    
+
     public override Task BeforeCombatStart()
     {
         var combatState = CombatManager.Instance.DebugOnlyGetState();
@@ -111,7 +108,7 @@ public class GremlinsRunModel() : CustomSingletonModel(HookType.Run)
 
         return Task.CompletedTask;
     }
-    
+
     public override Task AfterCombatEnd(CombatRoom room)
     {
         var combatState = CombatManager.Instance.DebugOnlyGetState();

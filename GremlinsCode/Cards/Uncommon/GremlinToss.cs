@@ -13,7 +13,7 @@ public class GremlinToss : GremlinsCardModel
 {
     public GremlinToss() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithTempHp(3);
+        this.WithTempHp(3);
         WithCostUpgradeBy(-1);
         WithCalculatedDamage(0, Calc);
     }
@@ -24,7 +24,7 @@ public class GremlinToss : GremlinsCardModel
     }
 
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCmd.GainTempHp(ctx, this);
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);

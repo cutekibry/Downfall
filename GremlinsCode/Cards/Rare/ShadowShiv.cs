@@ -14,11 +14,11 @@ public class ShadowShiv : GremlinsCardModel
     {
         WithPower<ShadowShivPower>(1);
         WithCostUpgradeBy(-1);
-        WithTip(typeof(Shiv));
+        this.WithTip<Shiv>();
         WithTip(CardKeyword.Exhaust);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<ShadowShivPower>(ctx, this);
     }

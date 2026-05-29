@@ -17,12 +17,12 @@ public class Polish : GremlinsCardModel
     {
         WithPower<AccuracyPower>(2, 1);
         WithPower<PolishPower>(2, 1);
-        WithTip(typeof(Shiv));
-        WithTip(typeof(Ward));
+        this.WithTip<Shiv>();
+        this.WithTip<Ward>();
         WithTip(StaticHoverTip.Block);
     }
 
-    protected override async Task PlayEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<AccuracyPower>(ctx, this);
         await CommonActions.ApplySelf<PolishPower>(ctx, this);
