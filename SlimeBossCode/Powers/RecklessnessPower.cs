@@ -6,13 +6,13 @@ using SlimeBoss.SlimeBossCode.CustomEnums;
 
 namespace SlimeBoss.SlimeBossCode.Powers;
 
-public class FlameTacklePower : SlimeBossPowerModel
+public class RecklessnessPower : SlimeBossPowerModel
 {
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer,
         CardModel? cardSource)
     {
         return dealer == Owner && cardSource != null && cardSource.Tags.Contains(SlimeBossTag.Tackle) &&
-               target != dealer
+               target == dealer
             ? Amount
             : 0;
     }
