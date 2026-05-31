@@ -4,9 +4,12 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 
 namespace Gremlins.GremlinsCode.Relics;
 
+[Obsolete]
 [Pool(typeof(GremlinsRelicPool))]
-public class GremlinLeadersVoucher() : GremlinsRelicModel(RelicRarity.Ancient)
+public class GremlinLeadersVoucher : GremlinsRelicModel
 {
-    // TODO - Boss relic
-    // TODO
+    public GremlinLeadersVoucher() : base(RelicRarity.Ancient, false)
+    {
+        WithEnergy(1);
+    }
 }

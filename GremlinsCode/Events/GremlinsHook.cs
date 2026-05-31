@@ -28,4 +28,10 @@ public class GremlinsHook
     {
         return DownfallHook.All<IShouldGremlinSwap>(cs, m => m.ShouldGremlinSwap(player, gremlin));
     }
+
+    public static Task AfterWizConsumed(ICombatState cs, PlayerChoiceContext ctx, Creature oldOwner)
+    {
+        return DownfallHook.Dispatch<IAfterWizConsumed>(cs, ctx,
+            m => m.AfterWizConsumed(ctx, oldOwner));
+    }
 }
