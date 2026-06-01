@@ -97,10 +97,11 @@ public class WizPower : GremlinsPowerModel, IHasSecondAmount
             internalData.CommandToModify = null;
             return;
         }
-
-        ;
         await PowerCmd.Remove<WizPower>(Owner);
     }
+
+    protected override Task AfterRemoved(PlayerChoiceContext ctx, Creature oldOwner)
+        => GremlinsHook.AfterWizConsumed(CombatState, ctx, oldOwner);
 
     private class Data
     {

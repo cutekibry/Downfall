@@ -12,7 +12,7 @@ public class InfiniteBlocksPower : GremlinsPowerModel
 {
     public InfiniteBlocksPower()
     {
-        this.WithTip<Ward>();
+        WithTip<Ward>();
     }
 
     public override async Task BeforeHandDraw(

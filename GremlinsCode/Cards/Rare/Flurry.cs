@@ -22,7 +22,8 @@ public class Flurry : GremlinsCardModel
 
     private static decimal Calc(CardModel card, Creature? creature)
     {
-        return CombatManager.Instance.History.CardPlaysFinished.Count(e => e.HappenedThisTurn(card.CombatState) && e.Actor == card.Owner.Creature);
+        return CombatManager.Instance.History.CardPlaysFinished.Count(e =>
+            e.HappenedThisTurn(card.CombatState) && e.Actor == card.Owner.Creature);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)

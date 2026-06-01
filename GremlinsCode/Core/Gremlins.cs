@@ -77,7 +77,7 @@ public class Gremlins : DownfallCharacterModel
 
 public class GremlinsRelicPool : DownfallRelicPool<Gremlins>;
 
-public abstract class GremlinsRelicModel(RelicRarity rarity) : DownfallRelicModel<Gremlins>(rarity);
+public abstract class GremlinsRelicModel(RelicRarity rarity, bool autoAdd = true) : DownfallRelicModel<Gremlins>(rarity, autoAdd);
 
 public abstract class GremlinsPowerModel(
     PowerType powerType = PowerType.Buff,
