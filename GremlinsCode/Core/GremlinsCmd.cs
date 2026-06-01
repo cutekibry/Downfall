@@ -52,6 +52,7 @@ public static class GremlinsCmd
 
     private static async Task<Creature?> SelectGremlin(PlayerChoiceContext ctx, Player player)
     {
+        // TODO : make choice with gremlin cards instead
         var state = GremlinsRunModel.GetState(player);
         var bench = state.Bench.ToList();
 
