@@ -97,8 +97,7 @@ public class SneakGremlin : GremlinsMonsterModel
     public override async Task TriggerGremlinBonus(PlayerChoiceContext ctx, Player player)
     {
         var combatState = player.Creature.CombatState;
-        var randomEnemy = combatState?.HittableEnemies.TakeRandom(1, combatState.RunState.Rng.CombatTargets)
-            .FirstOrDefault();
+        var randomEnemy = combatState?.RunState.Rng.CombatTargets.NextItem(combatState.HittableEnemies);
         if (randomEnemy == null) return;
         await CreatureCmd.Damage(ctx, randomEnemy, 2, ValueProp.Unpowered, player.Creature);
     }

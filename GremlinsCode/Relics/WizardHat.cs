@@ -24,7 +24,8 @@ public class WizardHat : GremlinsRelicModel, IAfterWizConsumed
     public Task AfterWizConsumed(PlayerChoiceContext ctx, Creature oldOwner)
     {
         if (oldOwner != Owner.Creature) return Task.CompletedTask;
-        var power = oldOwner.Powers.Where(e => e.TypeForCurrentAmount == PowerType.Debuff).TakeRandom(1, Owner.RunState.Rng.Niche).FirstOrDefault();
+        var power = Owner.RunState.Rng.Niche
+            .NextItem(oldOwner.Powers.Where(e => e.TypeForCurrentAmount == PowerType.Debuff));
         return PowerCmd.Remove(power);
     }
 }
