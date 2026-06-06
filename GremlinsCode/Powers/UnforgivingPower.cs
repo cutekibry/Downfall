@@ -8,9 +8,9 @@ namespace Gremlins.GremlinsCode.Powers;
 
 public class UnforgivingPower() : GremlinsPowerModel(PowerType.Buff, PowerStackType.Single)
 {
-    public override decimal ModifyPowerAmountGiven(PowerModel power, Creature giver, decimal amount, Creature? target,
+    public override decimal ModifyPowerAmountGivenMultiplicative(PowerModel power, Creature giver, decimal amount, Creature? target,
         CardModel? cardSource)
     {
-        return power is StrengthPower && power.Owner == Owner && amount < 0 ? 0 : amount;
+        return power is StrengthPower && power.Owner == Owner && amount < 0 ? 0 : 1;
     }
 }
