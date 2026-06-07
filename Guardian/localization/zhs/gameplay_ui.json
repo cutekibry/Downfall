@@ -1,0 +1,5 @@
+{
+"GUARDIAN-GEM":"宝石",
+"COMBAT_REWARD_ADD_GEMS":"将{Amount:plural:1颗[gold]宝石[/gold]|{Amount}颗[gold]宝石[/gold]}加入你的[gold]牌组[/gold]。",
+"GUARDIAN-GEM_SOCKET_SELECT": "选择一张牌镶嵌。"
+}

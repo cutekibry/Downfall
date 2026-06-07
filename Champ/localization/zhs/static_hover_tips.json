@@ -1,0 +1,15 @@
+{
+"CHAMP-BERSERKER.title":"战狂",
+"CHAMP-BERSERKER.description":"[gold]姿态[/gold]。[gold]技术奖励[/gold]：获得[blue]2[/blue]层[gold]活力[/gold]。\n[gold]终结技[/gold]：获得[blue]1[/blue]点[gold]力量[/gold]。",
+"CHAMP-COMBO.title":"连段",
+"CHAMP-COMBO.description":"处于特定[gold]姿态[/gold]触发效果。",
+"CHAMP-DEFENSIVE.title":"防守",
+"CHAMP-DEFENSIVE.description":"[gold]姿态[/gold]。[gold]技术奖励[/gold]：获得[blue]3[/blue]层[gold]反击[/gold]。\n[gold]终结技[/gold]：获得[blue]8[/blue]点[gold]格挡[/gold]。",
+"CHAMP-FINISHER.title":"终结技",
+"CHAMP-FINISHER.description":"处于姿态时才能打出。\n打出[gold]终结技[/gold]后，退出当前[gold]姿态[/gold]并触发其[gold]终结技[/gold]效果。\n[red]战狂[/red]：获得[blue]1[/blue]点[gold]力量[/gold]。\n[blue]防守[/blue]：获得[blue]6[/blue]点[gold]格挡[/gold]。",
+"CHAMP-STANCE.title":"姿态",
+"CHAMP-STANCE.description":"你同一时间只能拥有一个姿态。",
+"CHAMP-ULTIMATE.title":"终极",
+"CHAMP-ULTIMATE.description":"[gold]姿态[/gold]。视为同时处于[red]战狂[/red]和[blue]防守[/blue]。\n持续时间内打出[gold]终结技[/gold]将重新进入[gold]终极[/gold]。\n回合结束时退出[gold]终极[/gold]。",
+"TRIGGER_SKILL_BONUS.title": "触发你当前[gold]姿态[/gold]的[gold]技术奖励[/gold]."
+}

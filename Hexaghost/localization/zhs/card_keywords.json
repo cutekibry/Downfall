@@ -1,0 +1,8 @@
+{
+"HEXAGHOST-ADVANCE.description":"跳至下枚鬼火，若已被[gold]点燃[/gold]则[gold]熄灭[/gold]它。",
+"HEXAGHOST-ADVANCE.title":"步进",
+"HEXAGHOST-RETRACT.description":"跳至上枚鬼火，若已被[gold]点燃[/gold]则[gold]熄灭[/gold]它。",
+"HEXAGHOST-RETRACT.title":"回退",
+"HEXAGHOST-AFTERLIFE.description":"本牌被打出或被[gold]消耗[/gold]均会触发青色效果。",
+"HEXAGHOST-AFTERLIFE.title":"阴世"
+}
