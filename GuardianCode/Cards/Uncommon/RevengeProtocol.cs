@@ -12,7 +12,7 @@ public class RevengeProtocol : GuardianCardModel
 {
     public RevengeProtocol() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
-        WithPower<DexterityPower>(1, 2);
+        WithPower<DexterityPower>(1, 1);
     }
 
     protected override Artist Artist => Artist.Get<AlexMdle>();
