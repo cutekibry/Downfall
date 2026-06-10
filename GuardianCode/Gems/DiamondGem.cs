@@ -38,17 +38,10 @@
 //         }
 //     }
 
-<<<<<<< HEAD
 //     public override Task OnPlay(PlayerChoiceContext ctx, CardPlay? cardPlay)
 //     {
 //         return Task.CompletedTask;
 //     }
-=======
-    protected override Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay? cardPlay)
-    {
-        return Task.CompletedTask;
-    }
->>>>>>> develop-2
 
 //     public override int ModifyPlayCount(int originalPlayCount)
 //     {

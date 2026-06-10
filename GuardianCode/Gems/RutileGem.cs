@@ -19,7 +19,6 @@
 //     protected override IEnumerable<DynamicVar> CanonicalVars => [new GemVar(1)];
 //     public override CardRarity Rarity => CardRarity.Uncommon;
 
-<<<<<<< HEAD
 //     public override async Task OnPlay(PlayerChoiceContext ctx, CardPlay? cardPlay)
 //     {
 //         var effect = GuardianHook.ModifyGemEffect(CombatState, this, DynamicVars.Gem().BaseValue, Card);
@@ -27,12 +26,3 @@
 //             Card);
 //     }
 // }
-=======
-    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay? cardPlay)
-    {
-        var effect = GuardianHook.ModifyGemEffect(CombatState, this, DynamicVars.Gem().BaseValue, Card);
-        await PowerCmd.Apply<WeakPower>(ctx, CombatState.HittableEnemies, effect, Player.Creature,
-            Card);
-    }
-}
->>>>>>> develop-2
