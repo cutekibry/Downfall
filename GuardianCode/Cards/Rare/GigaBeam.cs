@@ -2,6 +2,7 @@ using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.CustomEnums;
+using Guardian.GuardianCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -31,7 +32,10 @@ public class GigaBeam : GuardianCardModel
             .BeforeDamage(BeforeDamageAction)
             .Execute(ctx);
         if (GuardianCmd.IsInMode<GuardianDefensiveMode>(Owner))
+        {
             await GuardianCmd.LeaveDefensiveMode(ctx, Owner);
+            await PowerCmd.Remove<DefensiveModePower>(Owner.Creature);
+        }
     }
 
     private async Task BeforeDamageAction()
