@@ -22,7 +22,7 @@ public class OrbSupport : GuardianCardModel
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
-        var card = Owner.GetDeck().TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
+        var card = Owner.GetDraw().TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
         if (card != null)
         {
             await GuardianCmd.PutIntoStasis(card, ctx, this);

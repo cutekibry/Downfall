@@ -13,9 +13,10 @@ public class AncientConstruct : GuardianCardModel
 {
     public AncientConstruct() : base(3, CardType.Power, CardRarity.Ancient, TargetType.Self)
     {
-        this.WithPower<ArtifactPower>(0, 2, false);
+        WithCostUpgradeBy(-1);
+        WithKeyword(CardKeyword.Innate);
+        WithPower<ArtifactPower>(1);
         this.WithPower<AncientConstructPower>(1, false);
-        this.WithTip(typeof(ArtifactPower), UpgradeType.Add);
     }
 
     protected override Artist Artist => Artist.Get<AlexMdle>();
