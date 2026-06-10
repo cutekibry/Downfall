@@ -1,8 +1,8 @@
+using System.Threading.Tasks;
 using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.CustomEnums;
-using Guardian.GuardianCode.Interfaces;
-using Guardian.GuardianCode.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace Guardian.GuardianCode.Powers;
 
@@ -16,8 +16,13 @@ public class GemFinderPower : GuardianPowerModel
     {
         var player = Owner.Player;
         if (player == null) return Task.CompletedTask;
-        var gemReward = new GemFinderReward(1, 1, player);
-        room.AddExtraReward(player, gemReward);
+
+        var rerollOptions = CardCreationOptions.ForRoom(player, room.RoomType);
+        for (int i = 0; i < Amount; i++)
+        {
+            var gemReward = GuardianModelDb.GenerateSingleGemReward(player, rerollOptions);
+            if (gemReward != null) room.AddExtraReward(player, gemReward);
+        }
         return Task.CompletedTask;
     }
 }

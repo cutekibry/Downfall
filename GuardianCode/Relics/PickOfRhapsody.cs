@@ -1,8 +1,8 @@
 using BaseLib.Utils;
 using Guardian.GuardianCode.Core;
-using Guardian.GuardianCode.Rewards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace Guardian.GuardianCode.Relics;
 
@@ -12,7 +12,12 @@ public class PickOfRhapsody() : GuardianRelicModel(RelicRarity.Uncommon)
     public override Task AfterCombatEnd(CombatRoom room)
     {
         if (room.RoomType != RoomType.Elite) return Task.CompletedTask;
-        var gemReward = new GemFinderReward(1, 1, Owner);
+
+        var gemReward = GuardianModelDb.GenerateSingleGemReward(
+            Owner,
+            CardCreationOptions.ForRoom(Owner, room.RoomType));
+        if (gemReward == null) return Task.CompletedTask;
+
         room.AddExtraReward(Owner, gemReward);
         return Task.CompletedTask;
     }
