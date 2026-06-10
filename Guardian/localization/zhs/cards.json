@@ -81,7 +81,7 @@
 "GUARDIAN-PRISMATIC_BARRIER.title":"缤纷眩盾",
 "GUARDIAN-PRISMATIC_SPRAY.description":"此牌中每有1颗宝石，造成{ExtraDamage:diff()}点伤害。",
 "GUARDIAN-PRISMATIC_SPRAY.title":"缤纷碎块",
-"GUARDIAN-RECOVER.description":"获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]提防[/gold]{Brace:diff()}。\n将你[gold]弃牌堆[/gold]中一张牌放入[gold]凝滞[/gold]。",
+"GUARDIAN-RECOVER.description":"获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]提防[/gold]{Brace:diff()}。\n[gold]凝滞[/gold]你[gold]弃牌堆[/gold]中的一张牌。",
 "GUARDIAN-RECOVER.title":"恢复",
 "GUARDIAN-REFRACTED_BEAM.description":"造成{Damage:diff()}点伤害{Repeat:diff()}次。\n可以被[gold]升级[/gold]任意次。\n每次升级多触发一次镶嵌的[gold]宝石[/gold]效果。",
 "GUARDIAN-REFRACTED_BEAM.title":"折射射线",
