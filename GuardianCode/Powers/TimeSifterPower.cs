@@ -7,9 +7,10 @@ namespace Guardian.GuardianCode.Powers;
 
 public class TimeSifterPower : GuardianPowerModel
 {
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
+    public override Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
     {
-        if (player.Creature != Owner) return;
-        GuardianCmd.AddMaxStasisSlots(Owner.Player!, Amount);
+        if (player.Creature == Owner) 
+            GuardianCmd.AddMaxStasisSlots(Owner.Player!, Amount);
+        return Task.CompletedTask;
     }
 }
