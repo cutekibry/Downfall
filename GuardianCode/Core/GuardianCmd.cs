@@ -214,7 +214,7 @@ public static class GuardianCmd
         var power = player.Creature.GetPower<ModeShiftPower>();
         if (power == null)
         {
-            await PowerCmd.Apply<ModeShiftPower>(ctx, player.Creature, 20, player.Creature, null, true);
+            await PowerCmd.Apply<ModeShiftPower>(ctx, player.Creature, 30, player.Creature, null, true);
             power = player.Creature.GetPower<ModeShiftPower>();
         }
 
