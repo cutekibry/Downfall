@@ -3,6 +3,7 @@ using BaseLib.Extensions;
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Downfall.DownfallCode.DynamicVars;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -108,5 +109,10 @@ public static class ConstructedCardModelExtensions
     public static ConstructedCardModel WithScry(this ConstructedCardModel card, int baseValue, int upgrade = 0)
     {
         return card.WithVars(new ScryVar(baseValue).WithUpgrade(upgrade));
+    }
+
+    public static decimal GetCalculatedValue(this ConstructedCardModel card, string varName, CardPlay play)
+    {
+        return ((CalculatedVar)card.DynamicVars[varName]).Calculate(play.Target);
     }
 }
