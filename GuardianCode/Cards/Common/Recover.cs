@@ -7,15 +7,15 @@ using Guardian.GuardianCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Guardian.GuardianCode.Cards.Uncommon;
+namespace Guardian.GuardianCode.Cards.Common;
 
 [Pool(typeof(GuardianCardPool))]
 public class Recover : GuardianCardModel
 {
-    public Recover() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public Recover() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithBlock(5, 3);
-        this.WithBrace(3, 1);
+        this.WithBrace(1);
         WithTip(GuardianTip.Stasis);
     }
 

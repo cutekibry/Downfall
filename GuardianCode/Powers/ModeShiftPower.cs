@@ -13,10 +13,10 @@ public class ModeShiftPower : GuardianPowerModel, IHasSecondAmount
 {
     public ModeShiftPower()
     {
-        WithVar("CurrentLimit", 20);
-        WithVar("MaxLimit", 50);
-        WithVar("Increase", 10);
-        WithBlock(16);
+        WithVar("CurrentLimit", 30);
+        // WithVar("MaxLimit", 50);
+        // WithVar("Increase", 10);
+        WithBlock(20);
     }
 
     public override bool ShouldRemoveDueToZero => false;
@@ -48,10 +48,10 @@ public class ModeShiftPower : GuardianPowerModel, IHasSecondAmount
         await CreatureCmd.GainBlock(Owner, DynamicVars.Block, null);
         var a = Owner.GetPowerAmount<DefensiveModePower>();
         var g = a == 0 && CombatState.CurrentSide == CombatSide.Enemy ? 2 : 1;
-        await PowerCmd.Apply<DefensiveModePower>(ctx, Owner, g, Owner, null);
-        DynamicVars["CurrentLimit"].BaseValue =
-            Math.Min(DynamicVars["CurrentLimit"].BaseValue + DynamicVars["Increase"].BaseValue,
-                DynamicVars["MaxLimit"].BaseValue);
+        await PowerCmd.Apply<DefensiveModePower>(ctx, Owner, g + 1, Owner, null);
+        // DynamicVars["CurrentLimit"].BaseValue =
+        //     Math.Min(DynamicVars["CurrentLimit"].BaseValue + DynamicVars["Increase"].BaseValue,
+        //         DynamicVars["MaxLimit"].BaseValue);
         SetAmount(Amount + DynamicVars["CurrentLimit"].IntValue, true);
     }
 }

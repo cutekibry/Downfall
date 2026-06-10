@@ -1,16 +1,17 @@
 using Guardian.GuardianCode.Core;
-using Guardian.GuardianCode.Events;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace Guardian.GuardianCode.Powers;
 
-public class EvasiveProtocolPower : GuardianPowerModel, IAfterGuardianModeChange
+public class EvasiveProtocolPower : GuardianPowerModel
 {
-    public async Task AfterGuardianModeChange(PlayerChoiceContext ctx, Player player, GuardianModeModel oldMode,
-        GuardianModeModel newMode)
+    public override async Task BeforeHandDrawLate(Player player, PlayerChoiceContext ctx, ICombatState combatState)
     {
-        if (player.Creature != Owner || newMode is not GuardianDefensiveMode) return;
-        await GuardianCmd.Polish(ctx, Owner, Amount, null);
+        if (player.Creature == Owner)
+        {
+            await GuardianCmd.Brace(ctx, player, Amount);
+        }
     }
 }

@@ -2,7 +2,6 @@ using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.CustomEnums;
-using Guardian.GuardianCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -13,15 +12,19 @@ public class Emergency : GuardianCardModel
 {
     public Emergency() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        this.WithAccelerate(1, 1);
         WithTip(GuardianTip.Stasis);
-        WithKeyword(CardKeyword.Exhaust);
+        WithTip(GuardianTip.Accelerate);
+        WithKeyword(CardKeyword.Exhaust, UpgradeType.Remove);
     }
 
     protected override Artist Artist => Artist.Get<Thelethargicweirdo>();
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await GuardianCmd.Accelerate(ctx, this, AccelerateType.All);
+        var stasisCount = GuardianCmd.GetStasisCount(Owner);
+        while (GuardianCmd.GetStasisCount(Owner) == stasisCount)
+        {
+            await GuardianCmd.Accelerate(ctx, this);
+        }
     }
 }

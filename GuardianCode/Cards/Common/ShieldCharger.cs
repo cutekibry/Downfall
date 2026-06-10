@@ -17,7 +17,7 @@ public class ShieldCharger : GuardianCardModel, ITickCard
         WithBlock(10, 2);
         WithKeyword(GuardianKeyword.Volatile);
         WithTip(GuardianTip.Stasis);
-        this.WithBrace(4, 2);
+        this.WithBrace(4, 1);
     }
 
     protected override Artist Artist => Artist.Get<Thelethargicweirdo>();

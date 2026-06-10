@@ -10,11 +10,10 @@ namespace Guardian.GuardianCode.Cards.Rare;
 [Pool(typeof(GuardianCardPool))]
 public class SphericShield : GuardianCardModel
 {
-    public SphericShield() : base(4, CardType.Skill, CardRarity.Rare, TargetType.Self)
+    public SphericShield() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
-        this.WithBrace(40);
+        this.WithBrace(30, 10);
         WithKeyword(CardKeyword.Exhaust);
-        WithCostUpgradeBy(-1);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();

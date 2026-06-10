@@ -2,6 +2,7 @@ using BaseLib.Utils;
 using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.CustomEnums;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace Guardian.GuardianCode.Cards.Uncommon;
@@ -9,18 +10,22 @@ namespace Guardian.GuardianCode.Cards.Uncommon;
 [Pool(typeof(GuardianCardPool))]
 public class OrbSupport : GuardianCardModel
 {
-    public OrbSupport() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public OrbSupport() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(9, 3);
+        WithDamage(8, 4);
+        WithKeyword(CardKeyword.Innate);
         WithKeyword(CardKeyword.Exhaust);
-        WithTip(GuardianTip.Brace);
+        WithTip(GuardianTip.Stasis);
     }
 
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        var attack = await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
-        var unblocked = attack.Results.SelectMany(r => r).Sum(x => x.UnblockedDamage);
-        await GuardianCmd.Brace(ctx, Owner, unblocked);
+        await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
+        var card = Owner.GetDeck().TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
+        if (card != null)
+        {
+            await GuardianCmd.PutIntoStasis(card, ctx, this);
+        }
     }
 }

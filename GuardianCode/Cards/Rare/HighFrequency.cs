@@ -1,40 +1,40 @@
-using BaseLib.Utils;
-using Downfall.DownfallCode.Artists;
-using Downfall.DownfallCode.Commands;
-using Downfall.DownfallCode.CustomEnums;
-using Guardian.GuardianCode.Core;
-using Guardian.GuardianCode.CustomEnums;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+// using BaseLib.Utils;
+// using Downfall.DownfallCode.Artists;
+// using Downfall.DownfallCode.Commands;
+// using Downfall.DownfallCode.CustomEnums;
+// using Guardian.GuardianCode.Core;
+// using Guardian.GuardianCode.CustomEnums;
+// using MegaCrit.Sts2.Core.Commands;
+// using MegaCrit.Sts2.Core.Entities.Cards;
+// using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Guardian.GuardianCode.Cards.Rare;
+// namespace Guardian.GuardianCode.Cards.Rare;
 
-[Pool(typeof(GuardianCardPool))]
-public class HighFrequency : GuardianCardModel
-{
-    public HighFrequency() : base(3, CardType.Skill, CardRarity.Rare, TargetType.Self)
-    {
-        WithKeyword(CardKeyword.Exhaust);
-        WithTip(GuardianTip.Stasis);
-        WithCostUpgradeBy(-1);
-    }
+// [Pool(typeof(GuardianCardPool))]
+// public class HighFrequency : GuardianCardModel
+// {
+//     public HighFrequency() : base(3, CardType.Skill, CardRarity.Rare, TargetType.Self)
+//     {
+//         WithKeyword(CardKeyword.Exhaust);
+//         WithTip(GuardianTip.Stasis);
+//         WithCostUpgradeBy(-1);
+//     }
 
-    protected override Artist Artist => Artist.Get<GoofballMcgee>();
+//     protected override Artist Artist => Artist.Get<GoofballMcgee>();
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
-    {
-        var card = (await DownfallCardCmd.SelectFromHand(ctx, DownfallCardSelectorPrefs.StasisSelectionPrompt, this))
-            .FirstOrDefault();
-        if (card == null) return;
+//     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+//     {
+//         var card = (await DownfallCardCmd.SelectFromHand(ctx, DownfallCardSelectorPrefs.StasisSelectionPrompt, this))
+//             .FirstOrDefault();
+//         if (card == null) return;
 
-        while (GuardianCmd.CanPutIntoStasis(Owner, silent: true))
-        {
-            var a = card.CreateClone();
-            await CardPileCmd.Add(a, PileType.Play);
-            await GuardianCmd.PutIntoStasis(a, ctx, this, true);
-        }
+//         while (GuardianCmd.CanPutIntoStasis(Owner, silent: true))
+//         {
+//             var a = card.CreateClone();
+//             await CardPileCmd.Add(a, PileType.Play);
+//             await GuardianCmd.PutIntoStasis(a, ctx, this, true);
+//         }
 
-        await CardCmd.Exhaust(ctx, card);
-    }
-}
+//         await CardCmd.Exhaust(ctx, card);
+//     }
+// }

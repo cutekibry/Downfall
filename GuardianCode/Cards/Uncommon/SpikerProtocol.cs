@@ -15,8 +15,8 @@ public class SpikerProtocol : GuardianCardModel
 {
     public SpikerProtocol() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
-        this.WithPower<SpikerProtocolPower>(2, 1, false);
-        this.WithBrace(6, 3);
+        WithCostUpgradeBy(-1);
+        this.WithPower<SpikerProtocolPower>(2, false);
         this.WithTip<ThornsPower>();
         WithTip(GuardianTip.DefensiveMode);
     }
@@ -26,6 +26,5 @@ public class SpikerProtocol : GuardianCardModel
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<SpikerProtocolPower>(ctx, this);
-        await GuardianCmd.Brace(ctx, this);
     }
 }

@@ -3,12 +3,14 @@ using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.Interfaces;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Guardian.GuardianCode.Powers;
 
@@ -27,13 +29,17 @@ public class BrilliantScalesPower : GuardianPowerModel
     private IReadOnlyList<GemModel> Gems => _sourceCard?.Gems ?? [];
     public event Action? GemsChanged;
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
+    public override async Task AfterDamageReceivedLate(PlayerChoiceContext ctx, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (_sourceCard == null) return;
-        if (Owner != player.Creature) return;
-        foreach (var gem in _sourceCard.Gems)
-            await gem.OnPlayWrapper(ctx, null);
+        if (dealer != null && dealer.IsEnemy && target == Owner)
+        {
+            foreach (var gem in _sourceCard!.Gems)
+            {
+                await gem.OnPlayWrapper(ctx, null);
+            }
+        }
     }
+
 
     public void SetCard(IGemSocketCard cardModel)
     {

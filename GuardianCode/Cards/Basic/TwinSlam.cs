@@ -2,7 +2,6 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Downfall.DownfallCode.Commands;
-using Guardian.GuardianCode.Cards.Ancient;
 using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.Interfaces;
 using MegaCrit.Sts2.Core.Commands;
@@ -14,11 +13,11 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 namespace Guardian.GuardianCode.Cards.Basic;
 
 [Pool(typeof(GuardianCardPool))]
-public class TwinSlam : GuardianCardModel, ITranscendenceCard, IGemSocketCard
+public class TwinSlam : GuardianCardModel, IGemSocketCard
 {
     public TwinSlam() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
     {
-        WithDamage(7);
+        WithDamage(6);
         WithUpgradingCardTip<SecondSlam>(Action);
     }
 
@@ -37,10 +36,10 @@ public class TwinSlam : GuardianCardModel, ITranscendenceCard, IGemSocketCard
 
     public int GemSlots => IsUpgraded ? 2 : 1;
 
-    public CardModel GetTranscendenceTransformedCard()
-    {
-        return ModelDb.Card<BaubleBurst>();
-    }
+    // public CardModel GetTranscendenceTransformedCard()
+    // {
+    //     return ModelDb.Card<BaubleBurst>();
+    // }
 
     
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)

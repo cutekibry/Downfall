@@ -10,7 +10,7 @@ public class CrystalShiv : GuardianCardModel
 {
     public CrystalShiv() : base(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
     {
-        WithDamage(3, 2);
+        WithDamage(4, 2);
         WithKeyword(CardKeyword.Exhaust);
         WithTags(CardTag.Shiv);
     }

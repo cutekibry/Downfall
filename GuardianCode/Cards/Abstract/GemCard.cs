@@ -49,32 +49,32 @@ public class Citrine : GemCard<CitrineGem>;
 [Pool(typeof(GuardianCardPool))]
 public class Onyx : GemCard<OnyxGem>;
 
-[Pool(typeof(GuardianCardPool))]
-public class Rutile : GemCard<RutileGem>;
+// [Pool(typeof(GuardianCardPool))]
+// public class Rutile : GemCard<RutileGem>;
 
-[Pool(typeof(GuardianCardPool))]
-public class Diamond : GemCard<DiamondGem>
-{
-    public Diamond()
-    {
-        WithKeyword(CardKeyword.Unplayable);
-    }
+// [Pool(typeof(GuardianCardPool))]
+// public class Diamond : GemCard<DiamondGem>
+// {
+//     public Diamond()
+//     {
+//         WithKeyword(CardKeyword.Unplayable);
+//     }
 
-    protected override bool IsPlayable => false;
-    protected override int CanonicalEnergyCost => -1;
-}
+//     protected override bool IsPlayable => false;
+//     protected override int CanonicalEnergyCost => -1;
+// }
 
-[Pool(typeof(GuardianCardPool))]
-public class Bismuth : GemCard<BismuthGem>
-{
-    public Bismuth()
-    {
-        WithKeyword(CardKeyword.Unplayable);
-    }
+// [Pool(typeof(GuardianCardPool))]
+// public class Bismuth : GemCard<BismuthGem>
+// {
+//     public Bismuth()
+//     {
+//         WithKeyword(CardKeyword.Unplayable);
+//     }
 
-    protected override bool IsPlayable => false;
-    protected override int CanonicalEnergyCost => -1;
-}
+//     protected override bool IsPlayable => false;
+//     protected override int CanonicalEnergyCost => -1;
+// }
 
 #pragma warning restore STS001
 

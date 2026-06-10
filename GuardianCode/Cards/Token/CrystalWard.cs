@@ -10,7 +10,7 @@ public class CrystalWard : GuardianCardModel
 {
     public CrystalWard() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
-        WithBlock(4, 2);
+        WithBlock(3, 2);
         WithKeyword(CardKeyword.Exhaust);
     }
 

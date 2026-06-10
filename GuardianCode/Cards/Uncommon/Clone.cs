@@ -13,10 +13,10 @@ namespace Guardian.GuardianCode.Cards.Uncommon;
 [Pool(typeof(GuardianCardPool))]
 public class Clone : GuardianCardModel
 {
-    public Clone() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public Clone() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithKeywords(CardKeyword.Exhaust);
-        this.WithAccelerate(0, 1);
+        WithCostUpgradeBy(-1);
         WithTip(GuardianTip.Stasis);
     }
 
@@ -28,7 +28,5 @@ public class Clone : GuardianCardModel
         var clone = card.CreateClone();
         await CardPileCmd.AddGeneratedCardToCombat(clone, PileType.Hand, Owner);
         await GuardianCmd.PutIntoStasis(clone, ctx, this);
-        if (IsUpgraded)
-            await GuardianCmd.Accelerate(ctx, this);
     }
 }

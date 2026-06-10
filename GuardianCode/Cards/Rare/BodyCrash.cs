@@ -12,7 +12,8 @@ public class BodyCrash : GuardianCardModel
 {
     public BodyCrash() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithBlock(5, 3);
+        WithCostUpgradeBy(-1);
+        WithBlock(5);
         WithCalculatedDamage(0, Calc);
     }
 

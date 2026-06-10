@@ -10,6 +10,6 @@ public class TimeSifterPower : GuardianPowerModel
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
     {
         if (player.Creature != Owner) return;
-        await GuardianCmd.Accelerate(ctx, player, Amount);
+        GuardianCmd.AddMaxStasisSlots(Owner.Player!, Amount);
     }
 }

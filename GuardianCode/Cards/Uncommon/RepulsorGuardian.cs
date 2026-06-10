@@ -1,6 +1,7 @@
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Guardian.GuardianCode.Core;
+using Guardian.GuardianCode.CustomEnums;
 using Guardian.GuardianCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,7 +14,9 @@ public class RepulsorGuardian : GuardianCardModel
     public RepulsorGuardian() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
         WithTip(CardKeyword.Exhaust);
-        this.WithPower<ExhaustStatusesPower>(1, false);
+        WithTip(CardKeyword.Unplayable);
+        WithTip(GuardianTip.Stasis);
+        this.WithPower<ExhaustStatusesPower>(2, false);
         WithCostUpgradeBy(-1);
     }
 

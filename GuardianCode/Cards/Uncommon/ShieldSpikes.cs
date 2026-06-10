@@ -14,15 +14,12 @@ public class ShieldSpikes : GuardianCardModel
     public ShieldSpikes() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithBlock(12, 4);
-        WithPower<ThornsPower>(3, 1);
         this.WithBrace(8);
-        WithTip(GuardianTip.DefensiveMode);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardBlock(this, cardPlay);
-        if (GuardianCmd.IsInMode<GuardianDefensiveMode>(Owner)) await CommonActions.ApplySelf<ThornsPower>(ctx, this);
         await GuardianCmd.Brace(ctx, this);
     }
 }

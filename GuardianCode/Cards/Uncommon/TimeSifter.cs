@@ -14,7 +14,7 @@ public class TimeSifter : GuardianCardModel
     {
         WithKeyword(CardKeyword.Innate, UpgradeType.Add);
         this.WithPower<TimeSifterPower>(1, false);
-        WithTip(GuardianTip.Accelerate);
+        WithTip(GuardianTip.Stasis);
     }
 
 

@@ -1,24 +1,27 @@
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Guardian.GuardianCode.Core;
+using Guardian.GuardianCode.Interfaces;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace Guardian.GuardianCode.Cards.Common;
 
 [Pool(typeof(GuardianCardPool))]
-public class PolyBeam : GuardianCardModel
+public class VentSteam : GuardianCardModel, IGemSocketCard
 {
-    public PolyBeam() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public VentSteam() : base(1, CardType.Skill, CardRarity.Common, TargetType.AllEnemies)
     {
-        WithDamage(2);
-        this.WithRepeat(4, 1);
+        WithPower<VulnerablePower>(2, 1);
     }
 
     protected override Artist Artist => Artist.Get<Thelethargicweirdo>();
 
+    public int GemSlots => 2;
+
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.CardAttack(this, cardPlay, DynamicVars.Repeat.IntValue).Execute(ctx);
+        await CommonActions.Apply<VulnerablePower>(ctx, this, cardPlay);
     }
 }

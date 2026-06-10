@@ -6,12 +6,12 @@ using Guardian.GuardianCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Guardian.GuardianCode.Cards.Rare;
+namespace Guardian.GuardianCode.Cards.Uncommon;
 
 [Pool(typeof(GuardianCardPool))]
 public class FuturePlans : GuardianCardModel
 {
-    public FuturePlans() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public FuturePlans() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
         this.WithPower<FuturePlansPower>(1, false);
         WithKeyword(CardKeyword.Innate, UpgradeType.Add);

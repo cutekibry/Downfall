@@ -4,34 +4,30 @@ using Guardian.GuardianCode.CustomEnums;
 using Guardian.GuardianCode.Interfaces;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 
 namespace Guardian.GuardianCode.Cards.Rare;
 
 [Pool(typeof(GuardianCardPool))]
-public class LaserTurret : GuardianCardModel, ITickCard, ICustomTickDuration
+public class LaserTurret : GuardianCardModel
 {
     public LaserTurret() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithDamage(5, 2);
+        WithDamage(7, 2);
         WithTip(GuardianTip.Stasis);
-        WithTip(GuardianTip.Tick);
+        WithCalculatedVar("Hit", 0, GetStasisCount);
     }
-
-    public int TickDuration => 4;
-
-
-    public async Task OnTick(PlayerChoiceContext ctx)
+    private static decimal GetStasisCount(CardModel card, Creature? _)
     {
-        var enemy = CombatState?.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
-        if (enemy == null) return;
-        await CreatureCmd.Damage(ctx, enemy, DynamicVars.Damage, Owner.Creature);
+        return GuardianCmd.GetStasisCount(card.Owner);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
-        await GuardianCmd.PutIntoStasis(this, ctx, this);
+        await CommonActions.CardAttack(this, cardPlay, (int)this.GetCalculatedValue("Hit", cardPlay)).Execute(ctx);
     }
 }

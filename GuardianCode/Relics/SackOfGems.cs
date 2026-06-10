@@ -3,6 +3,7 @@ using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.Rewards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Rewards;
 
 namespace Guardian.GuardianCode.Relics;
 
@@ -11,6 +12,11 @@ public class SackOfGems() : GuardianRelicModel(RelicRarity.Shop)
 {
     public override async Task AfterObtained()
     {
-        await RewardsCmd.OfferCustom(Owner, [new GemFinderReward(5, 10, Owner)]);
+        var rewards = new List<Reward>();
+        for (var i = 0; i < 5; i++)
+        {
+            rewards.Add(new GemFinderReward(1, 1, Owner));
+        }
+        await RewardsCmd.OfferCustom(Owner, rewards);
     }
 }

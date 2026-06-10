@@ -13,9 +13,9 @@ namespace Guardian.GuardianCode.Cards.Uncommon;
 [Pool(typeof(GuardianCardPool))]
 public class Preprogram : GuardianCardModel, IGemSocketCard
 {
-    public Preprogram() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public Preprogram() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithCards(5, 3);
+        WithCards(4, 2);
         WithTip(GuardianTip.Stasis);
     }
 

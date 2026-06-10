@@ -13,9 +13,9 @@ namespace Guardian.GuardianCode.Cards.Common;
 [Pool(typeof(GuardianCardPool))]
 public class Suspension : GuardianCardModel, IGemSocketCard
 {
-    public Suspension() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public Suspension() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        WithBlock(6, 3);
+        WithBlock(2, 3);
         WithTip(GuardianTip.Stasis);
     }
 

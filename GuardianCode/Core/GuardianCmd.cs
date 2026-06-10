@@ -275,9 +275,6 @@ public static class GuardianCmd
 
     public static async Task Polish(PlayerChoiceContext ctx, Creature target, decimal amount, CardModel? cardSource)
     {
-        await DecrementPower<WeakPower>(ctx, target, amount, cardSource);
-        await DecrementPower<FrailPower>(ctx, target, amount, cardSource);
-        await DecrementPower<VulnerablePower>(ctx, target, amount, cardSource);
         var tempPowers = target.Powers.Where(e => e is ITemporaryPower).ToList();
         foreach (var power in tempPowers)
         {
@@ -309,6 +306,34 @@ public static class GuardianCmd
             }
 
             await PowerCmd.ModifyAmount(ctx, power, -amount, target, cardSource);
+        }
+
+        var powers = target.Powers.Where(p => p.StackType == PowerStackType.Counter && p is not ITemporaryPower).ToList();
+
+        foreach (var power in powers)
+        {
+            if (power.Type == PowerType.Buff && power.Amount < 0)
+            {
+                if (power.Amount + amount >= 0)
+                {
+                    await PowerCmd.Remove(power);
+                }
+                else
+                {
+                    await PowerCmd.ModifyAmount(ctx, power, amount, target, cardSource);
+                }
+            }
+            else if (power.Type == PowerType.Debuff && power.Amount > 0)
+            {
+                if (power.Amount - amount <= 0)
+                {
+                    await PowerCmd.Remove(power);
+                }
+                else
+                {
+                    await PowerCmd.ModifyAmount(ctx, power, -amount, target, cardSource);
+                }
+            }
         }
     }
 

@@ -6,12 +6,12 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 
-namespace Guardian.GuardianCode.Cards.Common;
+namespace Guardian.GuardianCode.Cards.Uncommon;
 
 [Pool(typeof(GuardianCardPool))]
 public class AncientPower : GuardianCardModel, IGemSocketCard
 {
-    public AncientPower() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public AncientPower() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         this.WithPower<TemporaryStrengthUpPower>(3, 1, false);
         this.WithPower<TemporaryDexterityUpPower>(3, 1, false);

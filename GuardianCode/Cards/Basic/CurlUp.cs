@@ -1,19 +1,20 @@
+using BaseLib.Abstracts;
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Downfall.DownfallCode.Commands;
 using Downfall.DownfallCode.CustomEnums;
+using Guardian.GuardianCode.Cards.Ancient;
 using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.CustomEnums;
 using Guardian.GuardianCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace Guardian.GuardianCode.Cards.Basic;
 
 [Pool(typeof(GuardianCardPool))]
-public class CurlUp : GuardianCardModel
+public class CurlUp : GuardianCardModel, ITranscendenceCard
 {
     public CurlUp() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
     {
@@ -23,6 +24,10 @@ public class CurlUp : GuardianCardModel
 
     protected override Artist Artist => Artist.Get<AlexMdle>();
 
+    public CardModel GetTranscendenceTransformedCard()
+    {
+        return ModelDb.Card<StasisEgg>();
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
