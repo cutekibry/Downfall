@@ -28,11 +28,19 @@
 //     public override CardRarity Rarity => CardRarity.Rare;
 //     protected override IEnumerable<DynamicVar> CanonicalVars => [new GemVar(1)];
 
+<<<<<<< HEAD
 //     public override async Task OnPlay(PlayerChoiceContext ctx, CardPlay? cardPlay)
 //     {
 //         var effect = GuardianHook.ModifyGemEffect(CombatState, this, DynamicVars.Gem().BaseValue, Card);
 //         await PowerCmd.Apply<ArtifactPower>(ctx, Player.Creature, effect, Player.Creature, null);
 //     }
+=======
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay? cardPlay)
+    {
+        var effect = GuardianHook.ModifyGemEffect(CombatState, this, DynamicVars.Gem().BaseValue, Card);
+        await PowerCmd.Apply<ArtifactPower>(ctx, Player.Creature, effect, Player.Creature, null);
+    }
+>>>>>>> develop-2
 
 //     public override void AfterClonedOnCard(CardModel card) { }
 

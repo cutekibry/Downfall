@@ -35,7 +35,7 @@ public class BrilliantScalesPower : GuardianPowerModel
         {
             foreach (var gem in _sourceCard!.Gems)
             {
-                await gem.OnPlayWrapper(ctx, null);
+                await gem.OnPlay(ctx, null);
             }
         }
     }
