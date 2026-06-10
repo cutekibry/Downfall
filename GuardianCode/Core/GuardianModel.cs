@@ -89,13 +89,15 @@ public class GuardianCombatModel() : CustomSingletonModel(HookType.Combat)
     internal static async Task SetMode(PlayerChoiceContext ctx, Player player, GuardianModeModel newCanonical)
     {
         var current = ActiveMode[player];
-        if (current?.GetType() == newCanonical.GetType()) return;
         if (current != null) await current.OnExit();
         var mutable = newCanonical.ToMutable(player);
         ActiveMode[player] = mutable;
         await mutable.OnEnter();
         await Cmd.Wait(0.2f);
-        TriggerModeAnimation(player);
+        if (current?.GetType() != newCanonical.GetType())
+        {
+            TriggerModeAnimation(player);
+        }
         await Cmd.Wait(0.2f);
         await GuardianHook.AfterGuardianModeChangeEarly(player.Creature.CombatState!, ctx, player, current!,
             ActiveMode[player]!);

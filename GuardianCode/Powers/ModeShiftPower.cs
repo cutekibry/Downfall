@@ -49,6 +49,7 @@ public class ModeShiftPower : GuardianPowerModel, IHasSecondAmount
         var a = Owner.GetPowerAmount<DefensiveModePower>();
         var g = a == 0 && CombatState.CurrentSide == CombatSide.Enemy ? 2 : 1;
         await PowerCmd.Apply<DefensiveModePower>(ctx, Owner, g + 1, Owner, null);
+        if (a > 0) await GuardianCmd.EnterDefensiveMode(ctx, Owner.Player);
         // DynamicVars["CurrentLimit"].BaseValue =
         //     Math.Min(DynamicVars["CurrentLimit"].BaseValue + DynamicVars["Increase"].BaseValue,
         //         DynamicVars["MaxLimit"].BaseValue);
