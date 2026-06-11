@@ -11,7 +11,7 @@ public class HardenPower : GuardianPowerModel, IAfterGuardianModeChange
 {
     public async Task AfterGuardianModeChange(PlayerChoiceContext ctx, Player player, GuardianModeModel oldMode, GuardianModeModel newMode)
     {
-        if (newMode is GuardianDefensiveMode)
+        if (newMode is GuardianDefensiveMode && player == Owner.Player)
         {
             await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
         }

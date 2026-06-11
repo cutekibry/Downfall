@@ -16,13 +16,13 @@ namespace Guardian.GuardianCode.Gems;
 public class TourmalineGem : GemModel
 {
     public override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ThornsPower>()];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new GemVar(4)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new GemVar(2)];
     public override Color GemColor => new(0x06BE7BFF);
     public override CardRarity Rarity => CardRarity.Common;
 
     protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay? cardPlay)
     {
         var effect = GuardianHook.ModifyGemEffect(CombatState, this, DynamicVars.Gem().BaseValue, Card);
-        await PowerCmd.Apply<TemporaryThornsPower>(ctx, Player.Creature, effect, Player.Creature, null);
+        await PowerCmd.Apply<ThornsPower>(ctx, Player.Creature, effect, Player.Creature, null);
     }
 }

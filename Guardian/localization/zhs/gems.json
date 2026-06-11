@@ -29,7 +29,7 @@
 "GUARDIAN-RUBY_GEM.description":"本回合获得{Gem:diff()}点[gold]力量[/gold]。",
 "GUARDIAN-RUTILE_GEM.description":"给予所有敌人{Gem:diff()}层[gold]虚弱[/gold]。",
 "GUARDIAN-SAPPHIRE_GEM.description":"[gold]提防[/gold]{Gem:diff()}。",
-"GUARDIAN-TOURMALINE_GEM.description":"本回合获得{Gem:diff()}点[gold]荆棘[/gold]。",
+"GUARDIAN-TOURMALINE_GEM.description":"获得{Gem:diff()}点[gold]荆棘[/gold]。",
 "GUARDIAN-GEM_MODEL_JSON_CONVERTER.title": "",
 "GUARDIAN-GEM_MODEL_JSON_CONVERTER.description": ""
 }

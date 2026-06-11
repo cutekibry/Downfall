@@ -7,11 +7,11 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace Guardian.GuardianCode.Powers;
 
-public class ExhaustStatusesPower : GuardianPowerModel, IBeforeCardEntersStasis
+public class ExhaustStatusesPower : GuardianPowerModel, IAfterCardEntersStasis
 {
     public override bool ShouldReceiveCombatHooks => true;
 
-    public async Task BeforeCardEntersStasis(PlayerChoiceContext ctx, CardModel card, AbstractModel source)
+    public async Task AfterCardEntersStasis(PlayerChoiceContext ctx, CardModel card, AbstractModel source)
     {
         if (card.Owner.Creature == Owner && card.Keywords.Contains(CardKeyword.Unplayable))
         {

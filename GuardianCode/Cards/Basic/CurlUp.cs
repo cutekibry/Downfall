@@ -31,7 +31,6 @@ public class CurlUp : GuardianCardModel, ITranscendenceCard
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        if (CombatState == null) return;
         if (GuardianCmd.CanPutIntoStasis(Owner))
         {
             CardModel? card;
@@ -40,10 +39,10 @@ public class CurlUp : GuardianCardModel, ITranscendenceCard
                     (await DownfallCardCmd.SelectFromHand(ctx, DownfallCardSelectorPrefs.StasisSelectionPrompt, this))
                     .FirstOrDefault();
             else
-                card = CombatState.RunState.Rng.CombatCardSelection.NextItem(Owner.GetHand(e => e != this));
+                card = CombatState!.RunState.Rng.CombatCardSelection.NextItem(Owner.GetHand(e => e != this));
 
-            if (card == null) return;
-            await GuardianCmd.PutIntoStasis(card, ctx, this);
+            if (card != null)
+                await GuardianCmd.PutIntoStasis(card, ctx, this);
         }
 
         await GuardianCmd.Brace(ctx, this);

@@ -24,14 +24,18 @@ public class PackageSentry : GuardianCardModel, IPackageCard
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay play)
     {
+        if (!GuardianCmd.CanPutIntoStasis(Owner)) return;
         var blast = Owner.RunState.CreateCard<SentryBlast>(Owner);
         CardCmd.Upgrade(blast);
+        await CardPileCmd.AddGeneratedCardToCombat(blast, PileType.Hand, Owner);
         await GuardianCmd.PutIntoStasis(blast, ctx, this);
 
         if (IsUpgraded)
         {
+            if (!GuardianCmd.CanPutIntoStasis(Owner)) return;
             var wave = Owner.RunState.CreateCard<SentryWave>(Owner);
             CardCmd.Upgrade(wave);
+            await CardPileCmd.AddGeneratedCardToCombat(wave, PileType.Hand, Owner);
             await GuardianCmd.PutIntoStasis(wave, ctx, this);
         }
     }

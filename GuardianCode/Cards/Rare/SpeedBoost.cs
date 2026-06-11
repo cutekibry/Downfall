@@ -1,6 +1,7 @@
 using BaseLib.Utils;
 using Guardian.GuardianCode.Core;
 using Guardian.GuardianCode.CustomEnums;
+using Guardian.GuardianCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
@@ -12,7 +13,7 @@ public class SpeedBoost : GuardianCardModel
     public SpeedBoost() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
         WithKeyword(CardKeyword.Retain, UpgradeType.Add);
-        WithTip(GuardianTip.Accelerate);
+        this.WithAccelerate(1);
         WithTip(GuardianTip.Stasis);
     }
 
