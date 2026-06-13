@@ -18,7 +18,7 @@ public class EmeraldGem : GemModel
     public override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DexterityPower>()];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new GemVar(2)];
     public override Color GemColor => new(0x319028FF);
-    public override CardRarity Rarity => CardRarity.Uncommon;
+    public override CardRarity Rarity => CardRarity.Common;
 
     protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay? cardPlay)
     {
