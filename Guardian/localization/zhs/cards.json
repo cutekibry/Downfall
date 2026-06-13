@@ -7,7 +7,7 @@
 "GUARDIAN-BAUBLE_BURST.title":"宝珠爆裂",
 "GUARDIAN-BODY_CRASH.description":"获得{Block:diff()}点[gold]格挡[/gold]。\n造成等同于你[gold]格挡[/gold]的伤害。{InCombat:cond:\n（造成{CalculatedDamage:diff()}点伤害）|}",
 "GUARDIAN-BODY_CRASH.title":"全身猛撞",
-"GUARDIAN-CHARGE_CORE.description":"造成{Damage:diff()}点伤害。\n[gold]滴答[/gold]：抽一张牌。\n本牌被[gold]消耗[/gold]时，对随机敌人造成{RandomDamage:diff()}点伤害。",
+"GUARDIAN-CHARGE_CORE.description":"造成{Damage:diff()}点伤害。\n[gold]凝滞[/gold]此牌。\n[gold]滴答[/gold]：抽一张牌。\n本牌被[gold]消耗[/gold]时，对随机敌人造成{RandomDamage:diff()}点伤害。",
 "GUARDIAN-CHARGE_CORE.title":"充能核心",
 "GUARDIAN-CHARGE_UP.description":"获得{Block:diff()}点[gold]格挡[/gold]。\n下回合，获得{NextTurnTemporaryStrengthUpPower:diff()}点临时[gold]力量[/gold]。",
 "GUARDIAN-CHARGE_UP.title":"充能",

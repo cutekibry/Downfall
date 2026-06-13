@@ -18,6 +18,7 @@ public class ChargeCore : GuardianCardModel, ITickCard
     {
         WithKeyword(GuardianKeyword.Volatile);
         WithTip(CardKeyword.Exhaust);
+        WithTip(GuardianTip.Stasis);
         WithDamage(10, 5);
         WithCalculatedDamage("RandomDamage", 6, (_, _) => 0);
     }
@@ -31,6 +32,7 @@ public class ChargeCore : GuardianCardModel, ITickCard
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay.Target, DynamicVars.Damage.BaseValue).Execute(ctx);
+        await GuardianCmd.PutIntoStasis(this, ctx, this);
     }
 
     public override async Task AfterCardExhausted(PlayerChoiceContext ctx, CardModel card, bool causedByEthereal)
