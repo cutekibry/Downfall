@@ -5,12 +5,12 @@ using Guardian.GuardianCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Guardian.GuardianCode.Cards.Uncommon;
+namespace Guardian.GuardianCode.Cards.Rare;
 
 [Pool(typeof(GuardianCardPool))]
 public class TimeSifter : GuardianCardModel
 {
-    public TimeSifter() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public TimeSifter() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
         WithKeyword(CardKeyword.Innate, UpgradeType.Add);
         this.WithPower<TimeSifterPower>(1, false);

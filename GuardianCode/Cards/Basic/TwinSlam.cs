@@ -17,7 +17,7 @@ public class TwinSlam : GuardianCardModel, IGemSocketCard
 {
     public TwinSlam() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
     {
-        WithDamage(6);
+        WithDamage(6, 2);
         WithUpgradingCardTip<SecondSlam>(Action);
     }
 

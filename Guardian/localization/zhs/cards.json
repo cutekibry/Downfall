@@ -175,5 +175,5 @@
 "GUARDIAN-MAXIMUM_OVERDRIVE.title":"最大过载",
 "GUARDIAN-MAXIMUM_OVERDRIVE.description":"每当你凝滞的牌计数减少时，获得1点临时[gold]力量[/gold]。",
 "GUARDIAN-STASIS_EGG.title": "凝滞之卵",
-"GUARDIAN-STASIS_EGG.description": "将一张[gold]预防{IfUpgraded:show:+|}[/gold]加入你的[gold]手牌[/gold]。\n[gold]凝滞[/gold][gold]抽牌堆[/gold]、[gold]弃牌堆[/gold]或[gold]手牌[/gold]中的一张牌。"   
+"GUARDIAN-STASIS_EGG.description": "[gold]提防[/gold]{Brace:diff()}。\n[gold]凝滞[/gold][gold]抽牌堆[/gold]、[gold]弃牌堆[/gold]或[gold]手牌[/gold]中的一张牌。"   
 }

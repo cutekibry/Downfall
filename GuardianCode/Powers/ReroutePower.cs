@@ -25,7 +25,7 @@ public class ReroutePower : GuardianPowerModel
         CardModel card, bool isAutoPlay,
         ResourceInfo resources, PileType pileType, CardPilePosition position)
     {
-        if (_cardSource == card || card.Keywords.Contains(CardKeyword.Exhaust) || card is not { Type: CardType.Attack or CardType.Skill }) return (pileType, position);
+        if (_cardSource == card || card.Keywords.Contains(CardKeyword.Exhaust) || card is not { Type: CardType.Attack or CardType.Skill } || card.Owner != Owner.Player) return (pileType, position);
 
         _hasBeenApplied = true;
         var player = card.Owner;

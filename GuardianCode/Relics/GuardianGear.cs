@@ -2,6 +2,7 @@ using BaseLib.Utils;
 using Downfall.DownfallCode.Commands;
 using Guardian.GuardianCode.Cards.Token;
 using Guardian.GuardianCode.Core;
+using Guardian.GuardianCode.CustomEnums;
 using Guardian.GuardianCode.Events;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,20 +14,16 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 namespace Guardian.GuardianCode.Relics;
 
 [Pool(typeof(GuardianRelicPool))]
-public class GuardianGear() : GuardianRelicModel(RelicRarity.Starter), IAfterGuardianModeChange
+public class GuardianGear : GuardianRelicModel
 {
-    public async Task AfterGuardianModeChange(PlayerChoiceContext ctx, Player player, GuardianModeModel oldMode,
-        GuardianModeModel newMode)
+    public GuardianGear() : base(RelicRarity.Starter)
     {
-        if (player != Owner || newMode is not GuardianDefensiveMode) return;
-        Flash();
-        await PlayerCmd.GainEnergy(1, player);
-        await CardPileCmd.Draw(ctx, 2, player);
+        WithVar("Brace", 39);
+        WithTip(GuardianTip.Brace);
     }
-
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
     {
         if (player != Owner || combatState.RoundNumber > 1) return;
-        await DownfallCardCmd.GiveCard<GearUp>(player, PileType.Hand);
+        await GuardianCmd.Brace(ctx, player, DynamicVars["Brace"].BaseValue);
     }
 }

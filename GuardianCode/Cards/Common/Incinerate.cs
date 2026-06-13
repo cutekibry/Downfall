@@ -14,7 +14,7 @@ public class Incinerate : GuardianCardModel
 {
     public Incinerate() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(10, 2);
+        WithDamage(10, 3);
         WithTip(GuardianTip.Stasis);
     }
 

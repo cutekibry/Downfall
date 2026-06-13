@@ -12,7 +12,7 @@ public class SecondSlam : GuardianCardModel, IGemSocketCard
     public SecondSlam() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
     {
         WithKeywords(CardKeyword.Ethereal, CardKeyword.Exhaust);
-        WithDamage(6);
+        WithDamage(6, 2);
     }
 
     public int GemSlots => IsUpgraded ? 2 : 1;
