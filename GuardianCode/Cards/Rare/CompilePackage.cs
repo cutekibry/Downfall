@@ -16,6 +16,7 @@ public class CompilePackage : GuardianCardModel
 {
     public CompilePackage() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
+        WithCards(3);
         WithKeyword(CardKeyword.Exhaust);
         WithTip(GuardianTip.Stasis);
         WithTip(GuardianTip.Package);
@@ -28,7 +29,7 @@ public class CompilePackage : GuardianCardModel
             .CardPool<TokenCardPool>()
             .AllCards
             .OfType<IPackageCard>()
-            .TakeRandom(3, CombatState.RunState.Rng.CombatCardGeneration)
+            .TakeRandom(DynamicVars.Cards.IntValue, CombatState.RunState.Rng.CombatCardGeneration)
             .Cast<CardModel>()
             .Select(Select)
             .ToList();
