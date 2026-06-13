@@ -99,7 +99,7 @@
 "HEXAGHOST-HEXAGUARD.title":"六边防护",
 "HEXAGHOST-HOT_STREAK.title":"火热连胜",
 "HEXAGHOST-HOT_STREAK.description":"在你的回合结束时，对已经拥有[gold]灼魂[/gold]的敌人给予{HotStreakPower:diff()}层[gold]灼魂[/gold]。",
-"HEXAGHOST-INCINERATION.description":"造成{Damage:diff()}点伤害{Repeat:diff()}次。给予{SoulBurnPower:diff()}层[gold]灼魂[/gold]{Repeat:diff()}次。",
+"HEXAGHOST-INCINERATION.description":"重复{Repeat:diff()}次：\n造成{Damage:diff()}点伤害。\n给予{SoulBurnPower:diff()}层[gold]灼魂[/gold]。",
 "HEXAGHOST-INCINERATION.title":"焚化",
 "HEXAGHOST-INCORPOREAL.description":"失去{HpLoss:diff()}点生命。\n获得{IntangiblePower:diff()}层[gold]无实体[/gold]。",
 "HEXAGHOST-INCORPOREAL.title":"无形",
