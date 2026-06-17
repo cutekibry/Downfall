@@ -9,9 +9,8 @@ namespace Hexaghost.HexaghostCode.Cards.Basic;
 [Pool(typeof(HexaghostCardPool))]
 public class Kindle : HexaghostCardModel
 {
-    public Kindle() : base(2, CardType.Skill, CardRarity.Basic, TargetType.Self)
+    public Kindle() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
     {
-        WithBlock(4, 4);
     }
 
     protected override Artist Artist => Artist.Get<AlexMdle>();
@@ -19,7 +18,9 @@ public class Kindle : HexaghostCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.CardBlock(this, cardPlay);
-        await HexaghostCmd.Ignite(ctx, Owner);
+        if (IsUpgraded || !HexaghostCmd.IsIgnited(Owner))
+        {
+            await HexaghostCmd.Ignite(ctx, Owner);
+        }
     }
 }

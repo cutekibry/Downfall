@@ -8,17 +8,18 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 namespace Hexaghost.HexaghostCode.Cards.Rare;
 
 [Pool(typeof(HexaghostCardPool))]
-public class NightmareVision : HexaghostCardModel
+public class Poltergeist : HexaghostCardModel
 {
-    public NightmareVision() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public Poltergeist() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
-        this.WithPower<NightmareVisionPower>(4, 1, false);
+        this.WithPower<PoltergeistPower>(6, 2, false);
+        WithTip(CardKeyword.Ethereal);
     }
 
-    protected override Artist Artist => Artist.Get<Thelethargicweirdo>();
+    protected override Artist Artist => Artist.Get<Inmo>();
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.ApplySelf<NightmareVisionPower>(ctx, this);
+        await CommonActions.ApplySelf<PoltergeistPower>(ctx, this);
     }
 }

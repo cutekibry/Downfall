@@ -4,12 +4,12 @@ using Hexaghost.HexaghostCode.Core;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Hexaghost.HexaghostCode.Cards.Uncommon;
+namespace Hexaghost.HexaghostCode.Cards.Common;
 
 [Pool(typeof(HexaghostCardPool))]
 public class CatchUp : HexaghostCardModel
 {
-    public CatchUp() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public CatchUp() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         WithKeyword(CardKeyword.Exhaust, UpgradeType.Remove);
         WithVar("IgniteCount", 2);

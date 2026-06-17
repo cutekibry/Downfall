@@ -1,40 +1,35 @@
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
+using Downfall.DownfallCode.Commands;
+using Hexaghost.HexaghostCode.Cards.Token;
 using Hexaghost.HexaghostCode.Core;
 using Hexaghost.HexaghostCode.Extensions;
 using Hexaghost.HexaghostCode.Interfaces;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 
 namespace Hexaghost.HexaghostCode.Cards.Common;
 
 [Pool(typeof(HexaghostCardPool))]
-public class GhostLash : HexaghostCardModel, IHasAfterlifeEffect
+public class NightmareStrike : HexaghostCardModel, IHasAfterlifeEffect
 {
-    public GhostLash() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public NightmareStrike() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
+        WithUpgradingCardTip<ShadowStrike>();
+        WithDamage(3);
         this.WithAfterlife();
-        WithCalculatedDamage(8, 3, Calc, ValueProp.Move, 2, 1);
     }
 
     protected override Artist Artist => Artist.Get<Thelethargicweirdo>();
 
     public async Task AfterlifeEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
-    }
-
-    private static decimal Calc(CardModel card, Creature? arg2)
-    {
-        return PileType.Hand.GetPile(card.Owner).Cards
-            .Count(e => e != card && e.Keywords.Contains(CardKeyword.Ethereal));
+        await DownfallCardCmd.GiveCard<ShadowStrike>(Owner, PileType.Hand, upgraded: IsUpgraded);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
         await AfterlifeEffect(ctx, cardPlay);
     }
 }

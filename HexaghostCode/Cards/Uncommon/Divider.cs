@@ -11,15 +11,14 @@ public class Divider : HexaghostCardModel
 {
     public Divider() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(3, 2);
+        WithDamage(5, 2);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        var count = HexaghostCmd.GetIgnitedCount(Owner);
-        if (count == 0) return;
+        var count = HexaghostCmd.GetIgnitedCount(Owner) + 1;
         await CommonActions.CardAttack(this, cardPlay, count).Execute(ctx);
     }
 }

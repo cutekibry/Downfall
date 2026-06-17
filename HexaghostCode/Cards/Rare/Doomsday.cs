@@ -12,14 +12,20 @@ public class Doomsday : HexaghostCardModel
 {
     public Doomsday() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
-        this.WithPower<DoomsdayPower>(1, false);
-        WithCostUpgradeBy(-1);
+        this.WithPower<DoomsdayPower>(6, -1, false);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.ApplySelf<DoomsdayPower>(ctx, this);
+        if (HexaghostCmd.GetIgnitedCount(Owner) >= DynamicVars["DoomsdayPower"].IntValue)
+        {
+            await CommonActions.ApplySelf<DoomsArrivalPower>(ctx, this, 1);   
+        }
+        else
+        {
+            await CommonActions.ApplySelf<DoomsdayPower>(ctx, this);
+        }
     }
 }

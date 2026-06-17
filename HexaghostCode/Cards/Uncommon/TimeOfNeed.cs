@@ -6,13 +6,15 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Hexaghost.HexaghostCode.Cards.Rare;
+namespace Hexaghost.HexaghostCode.Cards.Uncommon;
 
 [Pool(typeof(HexaghostCardPool))]
 public class TimeOfNeed : HexaghostCardModel
 {
-    public TimeOfNeed() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
+    public TimeOfNeed() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
+        WithCostUpgradeBy(-1);
+        WithEnergy(1);
         WithKeywords(CardKeyword.Exhaust, CardKeyword.Retain);
     }
 
@@ -24,8 +26,8 @@ public class TimeOfNeed : HexaghostCardModel
             Owner.Character.CardPool.GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
                 .Where(c => c.Type == CardType.Power), 1, Owner.RunState.Rng.CombatCardGeneration).FirstOrDefault();
         if (card == null) return;
-        card.SetToFreeThisTurn();
-        if (IsUpgraded) card.UpgradeInternal();
+        card.EnergyCost.AddThisCombat(-DynamicVars.Energy.IntValue);
+        CardCmd.Upgrade(card);
         await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
     }
 }

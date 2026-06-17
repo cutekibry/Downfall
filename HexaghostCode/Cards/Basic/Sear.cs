@@ -18,8 +18,8 @@ public class Sear : HexaghostCardModel, ITranscendenceCard, IHasAfterlifeEffect
     public Sear() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
     {
         this.WithAfterlife();
-        WithDamage(5, 2);
-        WithPower<SoulBurnPower>(5, 2);
+        WithDamage(6, 2);
+        WithPower<SoulBurnPower>(6, 2);
     }
 
     protected override Artist Artist => Artist.Get<AlexMdle>();

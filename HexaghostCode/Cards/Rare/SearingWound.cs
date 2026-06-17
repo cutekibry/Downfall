@@ -14,8 +14,7 @@ public class SearingWound : HexaghostCardModel
 {
     public SearingWound() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AllAllies)
     {
-        WithKeyword(CardKeyword.Retain, UpgradeType.Add);
-        WithKeyword(CardKeyword.Exhaust);
+        WithKeyword(CardKeyword.Exhaust, UpgradeType.Remove);
     }
 
     protected override Artist Artist => Artist.Get<Inmo>();

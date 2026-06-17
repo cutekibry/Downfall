@@ -15,7 +15,6 @@ public class HeatShield : HexaghostCardModel
     public HeatShield() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
         WithCostUpgradeBy(-1);
-        WithKeywords(CardKeyword.Exhaust);
         WithCalculatedBlock(0, Calc);
         this.WithTip<SoulBurnPower>();
     }
@@ -30,5 +29,11 @@ public class HeatShield : HexaghostCardModel
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardBlock(this, cardPlay);
+        var power = cardPlay.Target!.GetPower<SoulBurnPower>();
+        if (power != null)
+        {
+            power.DynamicVars["Turns"].UpgradeValueBy(1);
+            power.InvokeDisplayAmountChanged();
+        }
     }
 }

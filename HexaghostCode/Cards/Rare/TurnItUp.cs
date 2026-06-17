@@ -14,13 +14,13 @@ public class TurnItUp : HexaghostCardModel
 {
     public TurnItUp() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
-        this.WithPower<TemporaryStrengthUpPower>(2, 1, false);
-        this.WithPower<TemporaryDexterityUpPower>(2, 1, false);
-        this.WithPower<TemporaryIntensityPower>(2, 1, false);
+        this.WithPower<TemporaryStrengthUpPower>(3, false);
+        this.WithPower<TemporaryDexterityUpPower>(3, false);
+        this.WithPower<TemporaryIntensityPower>(3, false);
         this.WithTip<StrengthPower>();
         this.WithTip<DexterityPower>();
         this.WithTip<IntensityPower>();
-        WithKeyword(CardKeyword.Retain);
+        WithKeyword(CardKeyword.Retain, UpgradeType.Add);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();

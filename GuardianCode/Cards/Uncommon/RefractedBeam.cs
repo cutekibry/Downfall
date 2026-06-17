@@ -14,13 +14,14 @@ public class RefractedBeam : GuardianCardModel, IGemSocketCard
     {
         WithDamage(4);
         this.WithRepeat(3, 1);
+        WithVar("GemRepeat", 1, 1);
         WithTip(GuardianKeyword.Gem);
     }
 
     public override int MaxUpgradeLevel => int.MaxValue;
 
     public int GemSlots => 1;
-    public int GemReplayCount => 1 + CurrentUpgradeLevel;
+    public int GemReplayCount => DynamicVars["GemRepeat"].IntValue;
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 
 namespace Hexaghost.HexaghostCode.Cards.Uncommon;
@@ -17,7 +18,8 @@ public class WorthySacrifice : HexaghostCardModel
     public WorthySacrifice() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
         WithCards(2);
-        WithKeywords(CardKeyword.Exhaust);
+        WithTip(CardKeyword.Exhaust);
+        WithTip(StaticHoverTip.Transform);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();

@@ -26,6 +26,6 @@ public class SeventhEye : HexaghostCardModel
             DownfallCardSelectorPrefs.ToHandSelectionPrompt, this)).FirstOrDefault();
         if (card != null) await CardPileCmd.Add(card, PileType.Hand);
         await HexaghostCmd.MoveToRandom(ctx, Owner, true);
-        await HexaghostCmd.ReplaceCurrentWithRandom(Owner);
+        // await HexaghostCmd.ReplaceCurrentWithRandom(Owner);
     }
 }

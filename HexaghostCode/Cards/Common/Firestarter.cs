@@ -12,8 +12,8 @@ public class Firestarter : HexaghostCardModel
 {
     public Firestarter() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
     {
-        WithDamage(5, 2);
-        WithPower<SoulBurnPower>(5, 2);
+        WithDamage(6, 2);
+        WithPower<SoulBurnPower>(6, 2);
     }
 
     protected override Artist Artist => Artist.Get<Inmo>();

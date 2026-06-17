@@ -1,35 +1,34 @@
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
-using Downfall.DownfallCode.Commands;
-using Hexaghost.HexaghostCode.Cards.Token;
 using Hexaghost.HexaghostCode.Core;
 using Hexaghost.HexaghostCode.Extensions;
 using Hexaghost.HexaghostCode.Interfaces;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace Hexaghost.HexaghostCode.Cards.Uncommon;
 
 [Pool(typeof(HexaghostCardPool))]
-public class NightmareGuise : HexaghostCardModel, IHasAfterlifeEffect
+public class GhostShield : HexaghostCardModel, IHasAfterlifeEffect
 {
-    public NightmareGuise() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public GhostShield() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        WithUpgradingCardTip<ShadowGuise>();
-        WithBlock(4, 2);
         this.WithAfterlife();
+        WithBlock(6, 3);
+        this.WithPower<BlurPower>(1, false);
     }
 
-    protected override Artist Artist => Artist.Get<Thelethargicweirdo>();
+    protected override Artist Artist => Artist.Get<Inmo>();
 
     public async Task AfterlifeEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await DownfallCardCmd.GiveCard<ShadowGuise>(Owner, PileType.Hand, upgraded: IsUpgraded);
+        await CommonActions.CardBlock(this, cardPlay);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.CardBlock(this, cardPlay);
         await AfterlifeEffect(ctx, cardPlay);
+        await CommonActions.ApplySelf<BlurPower>(ctx, this);
     }
 }

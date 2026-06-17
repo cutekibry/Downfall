@@ -11,7 +11,7 @@ public class ForkedFlame : HexaghostCardModel
 {
     public ForkedFlame() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
-        WithDamage(4, 4);
+        WithDamage(5, 5);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();

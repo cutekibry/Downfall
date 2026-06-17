@@ -5,32 +5,29 @@ using Hexaghost.HexaghostCode.Extensions;
 using Hexaghost.HexaghostCode.Interfaces;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace Hexaghost.HexaghostCode.Cards.Common;
 
 [Pool(typeof(HexaghostCardPool))]
-public class PowerFromBeyond : HexaghostCardModel, IHasAfterlifeEffect
+public class Hexaguard : HexaghostCardModel, IHasAfterlifeEffect
 {
-    public PowerFromBeyond() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public Hexaguard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
         this.WithAfterlife();
-        WithPower<VigorPower>(3, 1);
-        WithEnergy(2, 1);
-        this.WithPower<EnergyNextTurnPower>(2, 1, false);
+        WithBlock(6, 3);
+        WithCards(2);
     }
 
-    protected override Artist Artist => Artist.Get<Thelethargicweirdo>();
-
+    protected override Artist Artist => Artist.Get<CartesianCanvas>();
 
     public async Task AfterlifeEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.ApplySelf<VigorPower>(ctx, this);
+        await CommonActions.CardBlock(this, cardPlay);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        await CommonActions.Draw(this, ctx);
         await AfterlifeEffect(ctx, cardPlay);
-        await CommonActions.ApplySelf<EnergyNextTurnPower>(ctx, this);
     }
 }

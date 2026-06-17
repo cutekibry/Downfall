@@ -11,7 +11,7 @@ public class HauntingEcho : HexaghostCardModel
 {
     public HauntingEcho() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(7, 3);
+        WithDamage(8, 3);
     }
 
     protected override Artist Artist => Artist.Get<Inmo>();

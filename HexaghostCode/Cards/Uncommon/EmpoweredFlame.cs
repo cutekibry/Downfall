@@ -8,18 +8,17 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 namespace Hexaghost.HexaghostCode.Cards.Uncommon;
 
 [Pool(typeof(HexaghostCardPool))]
-public class Poltergeist : HexaghostCardModel
+public class EmpoweredFlame : HexaghostCardModel
 {
-    public Poltergeist() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public EmpoweredFlame() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
-        this.WithPower<PoltergeistPower>(4, 1, false);
-        WithTip(CardKeyword.Exhaust);
+        WithPower<IntensityPower>(3, 1);
     }
 
-    protected override Artist Artist => Artist.Get<Inmo>();
+    protected override Artist Artist => Artist.Get<Claude27A>();
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        await CommonActions.ApplySelf<PoltergeistPower>(ctx, this);
+        await CommonActions.ApplySelf<IntensityPower>(ctx, this);
     }
 }

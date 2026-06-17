@@ -10,12 +10,12 @@ namespace Hexaghost.HexaghostCode.Cards.Rare;
 [Pool(typeof(HexaghostCardPool))]
 public class IntoShadow : HexaghostCardModel
 {
-    public IntoShadow() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public IntoShadow() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
-        WithPower<IntoShadowPower>(1);
+        this.WithPower<IntoShadowPower>(1, false);
         WithTip(CardKeyword.Exhaust);
         WithTip(HexaghostKeyword.Retract);
-        WithCostUpgradeBy(-1);
+        WithKeyword(CardKeyword.Ethereal, UpgradeType.Remove);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)

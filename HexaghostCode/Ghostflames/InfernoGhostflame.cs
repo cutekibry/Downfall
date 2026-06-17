@@ -26,21 +26,27 @@ public class InfernoGhostflame : GhostflameModel
     {
         if (Owner.Creature.CombatState == null) return;
         var ignited = HexaghostCmd.GetIgnitedCount(Owner);
-        var target = CombatState.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
-        if (target == null) return;
-
-        SfxCmd.Play("event:/sfx/characters/attack_fire");
-        SpawnVfx(target);
         var hitCount = ignited + Repeat(GhostflameRepeatType.Damage);
         var damage = 4 + Intensity;
         for (var i = 0; i < hitCount; i++)
         {
-            if (!target.IsHittable) continue;
+            var target = CombatState.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
+            if (target == null) return;
+            SfxCmd.Play("event:/sfx/characters/attack_fire");
+            SpawnVfx(target);
             await CreatureCmd.Damage(ctx, target, damage, ValueProp.Move | ValueProp.Unpowered, Owner.Creature);
         }
 
         if (HexaghostCmd.AllIgnited(Owner))
             await PowerCmd.Apply<IntensityPower>(ctx, Owner.Creature, 2, Owner.Creature, null);
+
+        foreach (var ghostflame in HexaghostCmd.GetWheel(Owner))
+        {
+            if (ghostflame != this && ghostflame.IsIgnited)
+            {
+                await HexaghostCmd.Extinguish(Owner, ghostflame);
+            }
+        }
     }
 
     protected override async Task AfterEnergySpent(PlayerChoiceContext ctx, CardModel card, int amount)

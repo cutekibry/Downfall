@@ -1,10 +1,11 @@
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
-using Downfall.DownfallCode.Powers;
 using Hexaghost.HexaghostCode.Core;
 using Hexaghost.HexaghostCode.Extensions;
 using Hexaghost.HexaghostCode.Interfaces;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -16,20 +17,28 @@ public class Floatwork : HexaghostCardModel, IHasAfterlifeEffect
     public Floatwork() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
         this.WithAfterlife();
-        WithPower<DexterityPower>(1, 1);
-        WithPower<MetallicizePower>(2);
+        WithPower<DexterityPower>(1);
+        WithPower<PlatingPower>(3, 1);
     }
 
     protected override Artist Artist => Artist.Get<Thelethargicweirdo>();
 
-    public async Task AfterlifeEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    public override async Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext ctx, CombatSide side, IEnumerable<Creature> participants)
     {
-        await CommonActions.ApplySelf<MetallicizePower>(ctx, this);
+        if (participants.Contains(Owner.Creature) && Owner.GetHand().Contains(this))
+        {
+            await CommonActions.ApplySelf<PlatingPower>(ctx, this);
+        }
+    }
+
+    public Task AfterlifeEffect(PlayerChoiceContext ctx, CardPlay cardPlay)
+    {
+        return Task.CompletedTask;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<DexterityPower>(ctx, this);
-        await AfterlifeEffect(ctx, cardPlay);
+        await CommonActions.ApplySelf<PlatingPower>(ctx, this);
     }
 }

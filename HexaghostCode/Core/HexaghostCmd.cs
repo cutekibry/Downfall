@@ -173,6 +173,13 @@ public static class HexaghostCmd
         HexaghostVisualsBridge.Refresh(player);
         return Task.CompletedTask;
     }
+    public static Task Extinguish(Player player, GhostflameModel flame, bool silent = false)
+    {
+        flame.Extinguish();
+        if (silent) return Task.CompletedTask;
+        HexaghostVisualsBridge.Refresh(player);
+        return Task.CompletedTask;
+    }
 
     public static Task<int> ResetWheel(Player player)
     {

@@ -10,10 +10,10 @@ namespace Hexaghost.HexaghostCode.Cards.Uncommon;
 [Pool(typeof(HexaghostCardPool))]
 public class DevilsDance : HexaghostCardModel
 {
-    public DevilsDance() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public DevilsDance() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
-        this.WithPower<DevilsDancePower>(1, 1, false);
-        WithTip(HexaghostKeyword.Advance);
+        WithCostUpgradeBy(-1);
+        this.WithPower<DevilsDancePower>(1, false);
         WithTip(HexaghostKeyword.Retract);
     }
 

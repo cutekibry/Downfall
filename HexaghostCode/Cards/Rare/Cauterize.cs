@@ -1,31 +1,31 @@
-﻿using BaseLib.Utils;
-using Downfall.DownfallCode.Artists;
-using Downfall.DownfallCode.Powers;
-using Hexaghost.HexaghostCode.Core;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+﻿// using BaseLib.Utils;
+// using Downfall.DownfallCode.Artists;
+// using Downfall.DownfallCode.Powers;
+// using Hexaghost.HexaghostCode.Core;
+// using MegaCrit.Sts2.Core.Entities.Cards;
+// using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
-namespace Hexaghost.HexaghostCode.Cards.Rare;
+// namespace Hexaghost.HexaghostCode.Cards.Rare;
 
-[Pool(typeof(HexaghostCardPool))]
-public class Cauterize : HexaghostCardModel
-{
-    public Cauterize() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
-    {
-        WithDamage(7, 2);
-        this.WithTip<SoulBurnPower>();
-    }
+// [Pool(typeof(HexaghostCardPool))]
+// public class Cauterize : HexaghostCardModel
+// {
+//     public Cauterize() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+//     {
+//         WithDamage(7, 2);
+//         this.WithTip<SoulBurnPower>();
+//     }
 
-    protected override bool HasEnergyCostX => true;
+//     protected override bool HasEnergyCostX => true;
 
-    protected override Artist Artist => Artist.Get<Inmo>();
+//     protected override Artist Artist => Artist.Get<Inmo>();
     
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
-    {
-        if (cardPlay.Target == null) return;
-        var hits = ResolveEnergyXValue();
-        var attack = await CommonActions.CardAttack(this, cardPlay, hits).Execute(ctx);
-        var amount = attack.Results.SelectMany(r => r).Sum(x => x.TotalDamage);
-        await CommonActions.Apply<SoulBurnPower>(ctx, cardPlay.Target, this, amount);
-    }
-}
+//     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+//     {
+//         if (cardPlay.Target == null) return;
+//         var hits = ResolveEnergyXValue();
+//         var attack = await CommonActions.CardAttack(this, cardPlay, hits).Execute(ctx);
+//         var amount = attack.Results.SelectMany(r => r).Sum(x => x.TotalDamage);
+//         await CommonActions.Apply<SoulBurnPower>(ctx, cardPlay.Target, this, amount);
+//     }
+// }

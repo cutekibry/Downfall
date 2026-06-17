@@ -10,11 +10,12 @@ namespace Hexaghost.HexaghostCode.Cards.Rare;
 [Pool(typeof(HexaghostCardPool))]
 public class HereAndNow : HexaghostCardModel
 {
-    public HereAndNow() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public HereAndNow() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
         WithCostUpgradeBy(-1);
-        WithPower<MoreEnergyPower>(1);
-        WithPower<HereAndNowPower>(1);
+        WithEnergy(1);
+        this.WithPower<MoreEnergyPower>(1, false);
+        this.WithPower<HereAndNowPower>(1, false);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();

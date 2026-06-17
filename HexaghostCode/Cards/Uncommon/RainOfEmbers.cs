@@ -12,7 +12,7 @@ public class RainOfEmbers : HexaghostCardModel
 {
     public RainOfEmbers() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(6, 3);
+        WithDamage(5);
         WithPower<WeakPower>(1);
     }
 
@@ -22,7 +22,7 @@ public class RainOfEmbers : HexaghostCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        var x = ResolveEnergyXValue();
+        var x = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
         for (var i = 0; i < x; i++)
         {
             await CommonActions.CardAttack(this, cardPlay).Execute(ctx);

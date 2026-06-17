@@ -11,7 +11,7 @@ public class ShadowGuise : HexaghostCardModel
 {
     public ShadowGuise() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
-        WithBlock(4, 2);
+        WithBlock(5, 3);
         WithKeywords(CardKeyword.Exhaust, CardKeyword.Retain);
     }
 

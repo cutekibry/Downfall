@@ -12,7 +12,7 @@ public class StepThrough : HexaghostCardModel
 {
     public StepThrough() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(7, 3);
+        WithDamage(8, 3);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();

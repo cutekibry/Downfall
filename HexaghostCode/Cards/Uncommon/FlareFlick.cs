@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using BaseLib.Utils;
 using Downfall.DownfallCode.Artists;
 using Hexaghost.HexaghostCode.Core;
@@ -19,14 +20,10 @@ public class FlareFlick : HexaghostCardModel
     public FlareFlick() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
         WithKeyword(HexaghostKeyword.Advance, UpgradeType.Remove);
-        WithDamage(10, 4);
-        WithTips(c => c.IsUpgraded
-            ?
-            [
-                HoverTipFactory.FromKeyword(HexaghostKeyword.Advance),
-                HoverTipFactory.FromKeyword(HexaghostKeyword.Retract)
-            ]
-            : []);
+        WithDamage(14, 4);
+        this.WithTip(HexaghostKeyword.Advance, UpgradeType.Add);
+        this.WithTip(HexaghostKeyword.Retract, UpgradeType.Add);
+        this.WithTip(HexaghostKeyword.Still, UpgradeType.Add);
     }
 
     protected override Artist Artist => Artist.Get<CartesianCanvas>();
@@ -36,43 +33,52 @@ public class FlareFlick : HexaghostCardModel
         if (cardPlay.Target == null) return;
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
         await HexaghostCmd.Ignite(ctx, Owner);
-        if (!IsUpgraded || !cardPlay.Target.IsAlive) return;
-
-        var choices = new[] { HexaghostKeyword.Retract, HexaghostKeyword.Advance }
-            .Select(f => FlareFlickChoice.Create(f, Owner))
-            .ToList();
-        var chosen = await CardSelectCmd.FromChooseACardScreen(ctx, choices, Owner);
-        if (chosen is not FlareFlickChoice { Keyword : var keyword }) return;
-        if (keyword == HexaghostKeyword.Advance)
-            await HexaghostCmd.Advance(ctx, Owner, this);
-        else if (keyword == HexaghostKeyword.Retract)
-            await HexaghostCmd.Retract(ctx, Owner, this);
+        if (IsUpgraded)
+        {
+            await ChoiceCard.SelectAction<FlareFlickChoice>(ctx, this);
+        }
     }
 }
 
+
 [Pool(typeof(TokenCardPool))]
-public class FlareFlickChoice : HexaghostCardModel
+public abstract class ChoiceCard : HexaghostCardModel
 {
-    public FlareFlickChoice() : base(-1, CardType.Skill, CardRarity.Token, TargetType.Self)
+    public ChoiceCard() : base(-1, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
-        WithTips(c => c is FlareFlickChoice { Keyword: var keyword } ? [HoverTipFactory.FromKeyword(keyword)] : []);
+        WithTips(c => c is ChoiceCard { Keyword: var keyword } ? [HoverTipFactory.FromKeyword(keyword)] : []);
     }
 
     public override CardPoolModel VisualCardPool => ModelDb.CardPool<HexaghostCardPool>();
-    public CardKeyword Keyword { get; private set; } = CardKeyword.Exhaust;
-
-
-    public override string CustomPortraitPath => ModelDb.Card<FlareFlick>().CustomPortraitPath;
-
-    public static FlareFlickChoice Create(CardKeyword flame, Player owner)
-    {
-        var card = owner.Creature.CombatState!.CreateCard<FlareFlickChoice>(owner);
-        card.Keyword = flame;
-        return card;
-    }
+    public CardKeyword Keyword = CardKeyword.Exhaust;
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
         description.Add("Keyword", Keyword.GetTitle());
     }
+
+    public static async Task SelectAction<T>(PlayerChoiceContext ctx, CardModel card)
+        where T : ChoiceCard
+    {
+        var owner = card.Owner;
+        var choices = new[] { HexaghostKeyword.Retract, HexaghostKeyword.Advance, HexaghostKeyword.Still }
+            .Select(f =>
+            {
+                var choice = owner.Creature.CombatState!.CreateCard<T>(owner);
+                choice.Keyword = f;
+                return choice;
+            })
+            .ToList();
+        var chosen = await CardSelectCmd.FromChooseACardScreen(ctx, choices, owner);
+        if (chosen is not T { Keyword: var keyword }) return;
+        if (keyword == HexaghostKeyword.Advance)
+            await HexaghostCmd.Advance(ctx, owner, card);
+        else if (keyword == HexaghostKeyword.Retract)
+            await HexaghostCmd.Retract(ctx, owner, card);
+    }
+}
+
+public class FlareFlickChoice : ChoiceCard
+{
+    public override string CustomPortraitPath => ModelDb.Card<FlareFlick>().CustomPortraitPath;
 }

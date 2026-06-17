@@ -12,7 +12,7 @@ public class ThermalTransfer : HexaghostCardModel
 {
     public ThermalTransfer() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
-        WithDamage(7, 2);
+        WithDamage(7, 3);
         WithBlock(6, 2);
         this.WithTip<SoulBurnPower>();
     }

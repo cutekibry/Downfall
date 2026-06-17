@@ -14,7 +14,7 @@ public class LingeringShades : HexaghostCardModel
     public LingeringShades() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
     {
         WithKeyword(HexaghostKeyword.Retract);
-        WithPower<SoulBurnPower>(14, 4);
+        WithPower<SoulBurnPower>(11, 5);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)

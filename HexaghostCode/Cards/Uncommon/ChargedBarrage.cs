@@ -19,7 +19,7 @@ public class ChargedBarrage : HexaghostCardModel
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
-        var count = HexaghostCmd.GetIgnitedCount(Owner);
+        var count = HexaghostCmd.GetIgnitedCount(Owner) + 1;
         for (var i = 0; i < count; i++)
             await CommonActions.Apply<SoulBurnPower>(ctx, this, cardPlay);
     }

@@ -14,7 +14,7 @@ public class SpectralGrace : HexaghostCardModel
 {
     public SpectralGrace() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
-        WithDamage(12, 4);
+        WithDamage(15, 4);
         WithCards(2);
     }
 
