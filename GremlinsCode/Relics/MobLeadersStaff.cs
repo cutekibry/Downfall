@@ -31,7 +31,7 @@ public class MobLeadersStaff : GremlinsRelicModel
     
     public override async Task AfterEnergyReset(Player player)
     {
-        if (Owner != player) return;
+        if (Owner != player || Owner.PlayerCombatState is not { TurnNumber: 1 }) return;
         Flash();
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
