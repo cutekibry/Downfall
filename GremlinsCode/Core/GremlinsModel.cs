@@ -14,7 +14,7 @@ public class GremlinsModel() : CustomSingletonModel(HookType.Combat)
 {
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
     {
-        if (player.Character is not Gremlins || combatState.RoundNumber > 1) return;
+        if (player.Character is not Gremlins || player.PlayerCombatState is not { TurnNumber: 1 }) return;
         await PowerCmd.Apply<GremlinPower>(ctx, player.Creature, 1, player.Creature, null, true);
     }
 }

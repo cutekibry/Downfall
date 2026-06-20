@@ -5,14 +5,13 @@ extends SceneTree
 # source as a fallback when the compiled cache is missing.
 const SKIP_EXTENSIONS: Array[String] = [
 	".png", ".jpg", ".jpeg", ".webp", ".bmp", ".svg", ".tga",
-	".ogg", ".mp3", ".wav",  # audio is compiled to cache just like images
+	".ogg", ".mp3", ".wav",
 ]
 
-# Change this order if you're targeting mobile/web instead.
 const REMAP_PATH_KEYS: Array[String] = [
-	"path.s3tc_bptc",   # modern desktop (DX11+ / Vulkan)
-	"path.etc2_astc",   # mobile fallback
-	"path",             # generic / uncompressed fallback
+	"path.s3tc_bptc",
+	"path.etc2_astc",
+	"path",
 ]
 
 var _fallback_count: int = 0

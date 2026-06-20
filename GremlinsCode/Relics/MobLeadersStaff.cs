@@ -31,14 +31,14 @@ public class MobLeadersStaff : GremlinsRelicModel
     
     public override async Task AfterEnergyReset(Player player)
     {
-        if (Owner != player) return;
+        if (Owner != player || Owner.PlayerCombatState is not { TurnNumber: 1 }) return;
         Flash();
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext ctx, ICombatState combatState)
     {
-        if (player != Owner || combatState.RoundNumber > 1) return;
+        if (player != Owner || Owner.PlayerCombatState is not { TurnNumber: 1 }) return;
         Flash();
         await GremlinsCmd.SwapToNext(ctx, player);
     }

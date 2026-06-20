@@ -36,19 +36,14 @@ public class InfernoGhostflame : GhostflameModel
             SpawnVfx(target);
             await CreatureCmd.Damage(ctx, target, damage, ValueProp.Move | ValueProp.Unpowered, Owner.Creature);
         }
-
         if (HexaghostCmd.AllIgnited(Owner))
             await PowerCmd.Apply<IntensityPower>(ctx, Owner.Creature, 2, Owner.Creature, null);
-
-        foreach (var ghostflame in HexaghostCmd.GetWheel(Owner))
-        {
-            if (ghostflame != this && ghostflame.IsIgnited)
-            {
-                await HexaghostCmd.Extinguish(Owner, ghostflame);
-            }
-        }
+        
+        await HexaghostCmd.ExtinguishAllExceptCurrent(ctx, Owner);
     }
 
+    //todo Inferno Ghostflame should self-extinguish at the end of every turn if Ignited
+    
     protected override async Task AfterEnergySpent(PlayerChoiceContext ctx, CardModel card, int amount)
     {
         if (!IsActive || card.Owner != Owner || LocalContext.NetId == null) return;

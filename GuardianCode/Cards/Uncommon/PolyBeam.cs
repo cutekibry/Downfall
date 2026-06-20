@@ -9,7 +9,7 @@ namespace Guardian.GuardianCode.Cards.Uncommon;
 [Pool(typeof(GuardianCardPool))]
 public class PolyBeam : GuardianCardModel
 {
-    public PolyBeam() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public PolyBeam() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy)
     {
         WithDamage(2);
         this.WithRepeat(4, 1);
