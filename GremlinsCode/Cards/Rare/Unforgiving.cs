@@ -12,6 +12,7 @@ public class Unforgiving : GremlinsCardModel
     public Unforgiving() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
         WithPower<UnforgivingPower>(1);
+        WithCostUpgradeBy(-1);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
