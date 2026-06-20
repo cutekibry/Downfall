@@ -18,7 +18,6 @@ public class GremlinState
 
     internal void Register(Creature gremlin)
     {
-        ArgumentNullException.ThrowIfNull(gremlin);
         if (_gremlins.Contains(gremlin)) throw new InvalidOperationException($"{gremlin} already registered.");
         _gremlins.Add(gremlin);
         _rotation.AddLast(gremlin);
