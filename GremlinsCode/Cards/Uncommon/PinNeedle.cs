@@ -18,7 +18,7 @@ public class PinNeedle : GremlinsCardModel
         WithKeyword(CardKeyword.Exhaust);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
         await DownfallCardCmd.GiveCards<Pinprick>(Owner, PileType.Draw, DynamicVars.Cards.BaseValue,

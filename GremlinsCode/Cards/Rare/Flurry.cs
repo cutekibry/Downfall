@@ -26,7 +26,7 @@ public class Flurry : GremlinsCardModel
             e.HappenedThisTurn(card.CombatState) && e.Actor == card.Owner.Creature);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var amount = (int)((CalculatedVar)DynamicVars["Repeat"]).Calculate(cardPlay.Target);
         await CommonActions.CardAttack(this, cardPlay, amount).Execute(ctx);

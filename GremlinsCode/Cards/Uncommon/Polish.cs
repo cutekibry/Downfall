@@ -22,7 +22,7 @@ public class Polish : GremlinsCardModel
         WithTip(StaticHoverTip.Block);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<AccuracyPower>(ctx, this);
         await CommonActions.ApplySelf<PolishPower>(ctx, this);

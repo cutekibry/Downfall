@@ -28,7 +28,7 @@ public class BrokenShin : GremlinsCardModel
         return Math.Floor(creature?.GetPowerAmount<WeakPower>() / card.DynamicVars["WeakDiv"].BaseValue ?? 0);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         if (cardPlay.Target == null) return;
         var amount = ((CalculatedVar)DynamicVars["Agony"]).Calculate(cardPlay.Target);

@@ -18,7 +18,7 @@ public class FairyDust : GremlinsCardModel
         WithKeyword(CardKeyword.Exhaust);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCardCmd.GiveCards<Ward>(Owner, PileType.Hand, DynamicVars.Cards.BaseValue);
         await CommonActions.Draw(this, ctx);

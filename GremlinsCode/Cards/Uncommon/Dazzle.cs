@@ -18,10 +18,13 @@ public class Dazzle : GremlinsCardModel
         WithKeyword(CardKeyword.Exhaust);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
+        var shouldStealStrength = Owner.Creature.GetPowerAmount<WizPower>() >= 3;
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);
-        if (Owner.Creature.GetPowerAmount<WizPower>() < 3) return;
-        await DownfallCmd.Steal<StrengthPower>(ctx, cardPlay, this);
+        if (shouldStealStrength)
+        {
+            await DownfallCmd.Steal<StrengthPower>(ctx, cardPlay, this);
+        }
     }
 }

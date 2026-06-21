@@ -25,7 +25,7 @@ public class Bellow : GremlinsCardModel
         return card.CombatState?.HittableEnemies.Count(e => !e.Monster?.IntendsToAttack ?? false) ?? 0;
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var strength = ((CalculatedVar)DynamicVars["Strength"]).Calculate(null);
         await CommonActions.ApplySelf<StrengthPower>(ctx, this, strength);

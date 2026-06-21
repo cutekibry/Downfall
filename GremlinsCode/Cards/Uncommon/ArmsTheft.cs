@@ -17,7 +17,7 @@ public class ArmsTheft : GremlinsCardModel
         WithKeyword(CardKeyword.Exhaust);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.Apply<WeakPower>(ctx, this, cardPlay);
         await DownfallCmd.Steal<StrengthPower>(ctx, cardPlay, this);

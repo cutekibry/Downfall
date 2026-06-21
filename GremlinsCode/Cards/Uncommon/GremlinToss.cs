@@ -24,7 +24,7 @@ public class GremlinToss : GremlinsCardModel
     }
 
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCmd.GainTempHp(ctx, this);
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);

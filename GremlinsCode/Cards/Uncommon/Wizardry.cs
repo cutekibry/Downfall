@@ -15,7 +15,7 @@ public class Wizardry : GremlinsCardModel
         WithKeyword(CardKeyword.Innate, UpgradeType.Add);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.ApplySelf<WizardryPower>(ctx, this);
     }

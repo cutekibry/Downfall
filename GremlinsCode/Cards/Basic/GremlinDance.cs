@@ -43,7 +43,7 @@ public class GremlinDance : GremlinsCardModel
 
     private string GremlinName => CurrentGremlinMonster?.GetType().Name ?? "None";
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var current = GremlinsCmd.GetCurrentGremlin(Owner);
         if (current?.Monster is not GremlinsMonsterModel gremlin) return;

@@ -15,7 +15,7 @@ public class Tadah : GremlinsCardModel
         WithUpgradingCardTip<Ward>();
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCardCmd.GiveCard<Ward>(Owner, PileType.Hand, upgraded: IsUpgraded);
         await GremlinsCmd.SwapToType<WizardGremlin>(ctx, Owner);

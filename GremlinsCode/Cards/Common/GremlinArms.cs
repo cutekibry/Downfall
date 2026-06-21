@@ -8,7 +8,7 @@ namespace Gremlins.GremlinsCode.Cards.Common;
 [Pool(typeof(GremlinsCardPool))]
 public class GremlinArms() : GremlinsCardModel(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await GremlinsCmd.TriggerGremlinBonus(ctx, Owner);
         if (IsUpgraded)

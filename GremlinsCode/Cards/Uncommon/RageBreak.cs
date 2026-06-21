@@ -19,7 +19,7 @@ public class RageBreak : GremlinsCardModel
 
     public override bool GainsBlock => IsUpgraded;
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var powerAmount = Owner.Creature.GetPowerAmount<StrengthPower>();
         if (powerAmount <= 0) return;

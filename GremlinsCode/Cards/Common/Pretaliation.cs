@@ -16,7 +16,7 @@ public class Pretaliation : GremlinsCardModel
         this.WithEnemyDamage(3, -2);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay, DynamicVars.Repeat.IntValue).Execute(ctx);
         await DownfallCmd.EnemyAttackPlayer(ctx, cardPlay, this);

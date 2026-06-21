@@ -16,7 +16,7 @@ public class FeelTheAudience : GremlinsCardModel
         WithPower<WizPower>(1);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var count = CombatState?.HittableEnemies.Count(e => e.Monster?.IntendsToAttack ?? false) ?? 0;
         await CommonActions.CardAttack(this, cardPlay).Execute(ctx);

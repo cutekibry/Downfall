@@ -15,7 +15,7 @@ public class Raid : GremlinsCardModel
         WithCards(3, -1);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var cards = GremlinsCmd.GetLivingGremlinCount(Owner);
         await CardPileCmd.Draw(ctx, cards, Owner);

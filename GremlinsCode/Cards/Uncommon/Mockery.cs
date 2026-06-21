@@ -15,7 +15,7 @@ public class Mockery : GremlinsCardModel
         WithBlock(9, 3);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         var power = (await CommonActions.Apply<WeakPower>(ctx, this, cardPlay)).ToList().FirstOrDefault();
         if (power == null || power.Amount < 3) return;

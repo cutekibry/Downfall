@@ -19,7 +19,7 @@ public class ShowStopper : GremlinsCardModel
     protected override bool IsPlayable => Owner.Creature.GetPowerAmount<WizPower>() == 7;
     protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<WizPower>() == 7;
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await CommonActions.CardAttack(this, cardPlay, DynamicVars.Repeat.IntValue).Execute(ctx);
     }

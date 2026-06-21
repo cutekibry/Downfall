@@ -16,7 +16,7 @@ public class GlitterGuard : GremlinsCardModel
         WithCards(2);
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext ctx, CardPlay cardPlay)
+    protected override async Task OnPlayInternal(PlayerChoiceContext ctx, CardPlay cardPlay)
     {
         await DownfallCardCmd.GiveCards<Ward>(Owner, PileType.Hand, DynamicVars.Cards.IntValue, upgraded: IsUpgraded);
         await GremlinsCmd.SwapToType<ShieldGremlin>(ctx, Owner);
