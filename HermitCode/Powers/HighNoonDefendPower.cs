@@ -1,5 +1,4 @@
-using Hermit.HermitCode.Core;
-using MegaCrit.Sts2.Core.Commands;
+﻿using Hermit.HermitCode.Core;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -7,14 +6,14 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace Hermit.HermitCode.Powers;
 
-public sealed class HighNoonPower : HermitPowerModel
+public class HighNoonDefendPower : HermitPowerModel
 {
-    private bool IsMyBasicStrike(CardModel card) => card.Owner.Creature == Owner &&
-                                                    card.Tags.Contains(CardTag.Strike) &&
+    private bool IsMyBasicDefend(CardModel card) => card.Owner.Creature == Owner &&
+                                                    card.Tags.Contains(CardTag.Defend) &&
                                                     card.Rarity == CardRarity.Basic;
     public override Task AfterCardEnteredCombat(CardModel card)
     {
-        if (!IsMyBasicStrike(card))
+        if (!IsMyBasicDefend(card))
             return Task.CompletedTask;
         card.BaseReplayCount += Amount;
         return Task.CompletedTask;
@@ -24,7 +23,7 @@ public sealed class HighNoonPower : HermitPowerModel
         CardModel? cardSource)
     {
         if (power != this) return Task.CompletedTask;
-        var cards = Owner.Player?.PlayerCombatState?.AllCards.Where(IsMyBasicStrike);
+        var cards = Owner.Player?.PlayerCombatState?.AllCards.Where(IsMyBasicDefend);
         if (cards == null) return Task.CompletedTask;
         foreach (var card in cards)
             card.BaseReplayCount += (int) amount;
